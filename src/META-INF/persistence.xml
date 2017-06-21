@@ -4,6 +4,9 @@
     <persistence-unit name="yummy" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.codecool.yummy.model.User</class>
+        <class>com.codecool.yummy.model.Recipe</class>
+        <class>com.codecool.yummy.model.Picture</class>
+        <class>com.codecool.yummy.model.Comment</class>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL94Dialect"/>
             <property name="hibernate.hbm2dll.auto" value="create-drop"/>
@@ -12,8 +15,8 @@
 
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/yummy"/>
-            <property name="javax.persistence.jdbc.user" value="szilarddavid"/>
-            <property name="javax.persistence.jdbc.password" value="szilarddavid"/>
+            <property name="javax.persistence.jdbc.user" value="flavia"/>
+            <property name="javax.persistence.jdbc.password" value="flavia"/>
             <!--<property name="javax.persistence.sql-load-script-source" value="insert.sql"/>-->
         </properties>
     </persistence-unit>
