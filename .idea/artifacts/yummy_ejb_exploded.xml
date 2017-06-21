@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-ejb" name="yummy:ejb exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/yummy_ejb_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="yummy/ejb/EJB" />
+      <element id="module-output" name="yummy" />
+    </root>
+  </artifact>
+</component>
