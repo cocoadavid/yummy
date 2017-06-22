@@ -1,5 +1,6 @@
 package com.codecool.yummy.model;
 
+import javax.jws.soap.SOAPBinding;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -26,15 +27,21 @@ public class User {
     @ManyToMany
     private Set<User> following = new HashSet<User>();
 
+    @ManyToMany
+    private Set<User> followers = new HashSet<User>();
+
     public User() {
     }
 
-    public User(String name, String password, List<Recipe> recipes, Set<User> following) {
+    public User(String name, String password, List<Recipe> recipes, Set<User> following,Set<User> followers) {
         this.name = name;
         this.password = password;
         this.recipes = recipes;
         this.following = following;
+        this.followers= followers;
     }
+
+
 
     public long getId() {
         return id;
@@ -82,6 +89,18 @@ public class User {
 
     public void addFollowing(User user) {
         following.add(user);
+    }
+
+    public void addFollowers(User user){
+        followers.add(user);
+    }
+
+    public void removeFollowing(User user) {
+        following.remove(user);
+    }
+
+    public void removeFollowers(User user){
+        followers.remove(user);
     }
 
 }
