@@ -21,17 +21,17 @@ public class User {
     private String password;
 
     @OneToMany
-    private Set<Recipe> recipe = new HashSet<Recipe>();
+    private Set<Recipe> recipes = new HashSet<Recipe>();
 
     @ManyToMany
     private Set<User> following = new HashSet<User>();
 
     public User() {}
 
-    public User(String name, String password, Set<Recipe> recipe, Set<User> following) {
+    public User(String name, String password, Set<Recipe> recipes, Set<User> following) {
         this.name = name;
         this.password = password;
-        this.recipe = recipe;
+        this.recipes = recipes;
         this.following = following;
     }
 
@@ -43,12 +43,12 @@ public class User {
         this.id = id;
     }
 
-    public Set<Recipe> getRecipe() {
-        return recipe;
+    public Set<Recipe> getRecipes() {
+        return recipes;
     }
 
-    public void setRecipe(Set<Recipe> recipe) {
-        this.recipe = recipe;
+    public void setRecipes(Set<Recipe> recipes) {
+        this.recipes = recipes;
     }
 
     public Set<User> getFollowing() {
@@ -57,6 +57,14 @@ public class User {
 
     public void setFollowing(Set<User> following) {
         this.following = following;
+    }
+
+    public void addRecipe(Recipe recipe) {
+        recipes.add(recipe);
+    }
+
+    public void addFollowing(User user) {
+        following.add(user);
     }
 
 }
