@@ -1,9 +1,7 @@
 package com.codecool.yummy.model;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by flavia on 2017.06.21..
@@ -26,10 +24,10 @@ public class Recipe {
             name = "PictureToRecipe",
             joinColumns = @JoinColumn(name = "Recipe"),
             inverseJoinColumns = @JoinColumn(name = "Picture"))
-    private Set<Picture> picture = new HashSet<Picture>();
+    private List<Picture> pictures = new ArrayList<Picture>();
 
     @OneToMany
-    private Set<Comment> comment = new HashSet<Comment>();
+    private List<Comment> comments = new ArrayList<Comment>();
 
     private int yummy;
 
@@ -38,12 +36,12 @@ public class Recipe {
 
     public Recipe() {}
 
-    public Recipe(String description, String category, Date date, Set<Picture> picture, Set<Comment> comment, int yummy, User user) {
+    public Recipe(String description, String category, Date date, List<Picture> pictures, List<Comment> comments, int yummy, User user) {
         this.description = description;
         this.category = category;
         this.date = date;
-        this.picture = picture;
-        this.comment = comment;
+        this.pictures = pictures;
+        this.comments = comments;
         this.yummy = yummy;
         this.user = user;
     }
@@ -80,20 +78,20 @@ public class Recipe {
         this.date = date;
     }
 
-    public Set<Picture> getPicture() {
-        return picture;
+    public List<Picture> getPicture() {
+        return pictures;
     }
 
-    public void setPicture(Set<Picture> picture) {
-        this.picture = picture;
+    public void setPicture(List<Picture> pictures) {
+        this.pictures = pictures;
     }
 
-    public Set<Comment> getComment() {
-        return comment;
+    public List<Comment> getComment() {
+        return comments;
     }
 
-    public void setComment(Set<Comment> comment) {
-        this.comment = comment;
+    public void setComment(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public int getYummy() {
@@ -110,6 +108,14 @@ public class Recipe {
 
     public void setUser(User user) {
         this.user = user;
+    }
+    
+    public void addPicture(Picture picture) {
+        pictures.add(picture);
+    }
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
     }
 
 }
