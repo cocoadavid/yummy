@@ -1,6 +1,7 @@
 package com.codecool.yummy.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -8,8 +9,7 @@ import java.util.Set;
 /**
  * Created by szilarddavid on 2017.06.21..
  */
-@Entity
-        (name = "person")
+@Entity(name = "person")
 public class User {
 
     @Id
@@ -21,14 +21,15 @@ public class User {
     private String password;
 
     @OneToMany
-    private Set<Recipe> recipes = new HashSet<Recipe>();
+    private List<Recipe> recipes = new ArrayList<Recipe>();
 
     @ManyToMany
     private Set<User> following = new HashSet<User>();
 
-    public User() {}
+    public User() {
+    }
 
-    public User(String name, String password, Set<Recipe> recipes, Set<User> following) {
+    public User(String name, String password, List<Recipe> recipes, Set<User> following) {
         this.name = name;
         this.password = password;
         this.recipes = recipes;
@@ -43,11 +44,11 @@ public class User {
         this.id = id;
     }
 
-    public Set<Recipe> getRecipes() {
+    public List<Recipe> getRecipes() {
         return recipes;
     }
 
-    public void setRecipes(Set<Recipe> recipes) {
+    public void setRecipes(List<Recipe> recipes) {
         this.recipes = recipes;
     }
 
