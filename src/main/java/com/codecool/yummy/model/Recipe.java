@@ -13,6 +13,8 @@ public class Recipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private String name;
+
     private String description;
 
     private String category;
@@ -20,10 +22,10 @@ public class Recipe {
     private Date date;
 
     @OneToMany
-    @JoinTable(
-            name = "PictureToRecipe",
-            joinColumns = @JoinColumn(name = "Recipe"),
-            inverseJoinColumns = @JoinColumn(name = "Picture"))
+//    @JoinTable(
+//            name = "PictureToRecipe",
+//            joinColumns = @JoinColumn(name = "Recipe"),
+//            inverseJoinColumns = @JoinColumn(name = "Picture"))
     private List<Picture> pictures = new ArrayList<Picture>();
 
     @OneToMany
@@ -36,7 +38,8 @@ public class Recipe {
 
     public Recipe() {}
 
-    public Recipe(String description, String category, Date date, List<Picture> pictures, List<Comment> comments, int yummy, User user) {
+    public Recipe(String name, String description, String category, Date date, List<Picture> pictures, List<Comment> comments, int yummy, User user) {
+        this.name = name;
         this.description = description;
         this.category = category;
         this.date = date;
@@ -52,6 +55,30 @@ public class Recipe {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Picture> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(List<Picture> pictures) {
+        this.pictures = pictures;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     public String getDescription() {
@@ -109,7 +136,7 @@ public class Recipe {
     public void setUser(User user) {
         this.user = user;
     }
-    
+
     public void addPicture(Picture picture) {
         pictures.add(picture);
     }

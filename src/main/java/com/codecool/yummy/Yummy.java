@@ -41,6 +41,26 @@ public class Yummy {
         Comment com1=new Comment(user1,date1,"vmi komment");
         Comment com2=new Comment(user2,date2,"vmi komment2");
 
+        // TESTING ADD METHODS
+        user1.addFollowing(user2);
+        user2.addFollowing(user1);
+        user1.addRecipe(recipe1);
+        user2.addRecipe(recipe2);
+        recipe1.addPicture(picture1);
+        recipe2.addPicture(picture2);
+        recipe1.addComment(com1);
+        recipe1.addComment(com2);
+
+        // TESTING SETTERS
+        user1.setName("János");
+        user2.setName("Eduardo");
+        user1.setPassword("pass1");
+        user2.setPassword("pass2");
+        recipe1.setCategory("dessert");
+        recipe2.setCategory("soup");
+        recipe1.setName("lasagne");
+        recipe2.setName("Ragacsos malaccsászár koreai BBQ-val");
+
         EntityTransaction transaction = em.getTransaction();
         transaction.begin();
         em.persist(user1);
