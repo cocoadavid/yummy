@@ -145,4 +145,12 @@ public class Recipe {
         comments.add(comment);
     }
 
+    public void removePicture(Picture picture) {
+        pictures.remove(picture);
+    }
+
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
+    }
+
 }
