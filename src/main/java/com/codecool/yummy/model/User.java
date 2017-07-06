@@ -1,5 +1,7 @@
 package com.codecool.yummy.model;
 
+import org.springframework.stereotype.Component;
+
 import javax.jws.soap.SOAPBinding;
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.Set;
 /**
  * Created by szilarddavid on 2017.06.21..
  */
+@Component
 @Entity(name = "person")
 public class User {
 

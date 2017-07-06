@@ -1,5 +1,7 @@
 package com.codecool.yummy.model;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,6 +10,8 @@ import javax.persistence.Id;
 /**
  * Created by flavia on 2017.06.21..
  */
+
+@Component
 @Entity
 public class Picture {
 

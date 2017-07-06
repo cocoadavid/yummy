@@ -5,6 +5,8 @@ import com.codecool.yummy.model.Picture;
 import com.codecool.yummy.model.Recipe;
 import com.codecool.yummy.model.User;
 import com.sun.org.apache.regexp.internal.RE;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,6 +21,8 @@ import java.util.Date;
 /**
  * Created by szilarddavid on 2017.06.21..
  */
+
+@SpringBootApplication
 public class Yummy {
 
     public static void populateDb(EntityManager em){
@@ -77,11 +81,12 @@ public class Yummy {
     }
 
     public static void main(String[] args){
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("yummy");
-        EntityManager em =emf.createEntityManager();
-        populateDb(em);
-        em.close();
-        emf.close();
+//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("yummy");
+//        EntityManager em =emf.createEntityManager();
+//        populateDb(em);
+//        em.close();
+//        emf.close();
+        SpringApplication.run(Yummy.class, args);
     }
 
 }

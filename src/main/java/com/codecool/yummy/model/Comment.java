@@ -1,11 +1,15 @@
 package com.codecool.yummy.model;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by flavia on 2017.06.21..
  */
+
+@Component
 @Entity
 public class Comment {
 
