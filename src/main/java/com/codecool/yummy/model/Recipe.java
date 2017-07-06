@@ -26,10 +26,6 @@ public class Recipe {
     private Date date;
 
     @OneToMany
-//    @JoinTable(
-//            name = "PictureToRecipe",
-//            joinColumns = @JoinColumn(name = "Recipe"),
-//            inverseJoinColumns = @JoinColumn(name = "Picture"))
     private List<Picture> pictures = new ArrayList<Picture>();
 
     @OneToMany
