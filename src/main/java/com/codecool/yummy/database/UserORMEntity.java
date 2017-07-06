@@ -1,6 +1,7 @@
 package com.codecool.yummy.database;
 
 import com.codecool.yummy.model.Recipe;
+import com.codecool.yummy.model.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class UserORMEntity {
     private String email;
 
     @OneToMany
-    private List<Recipe> recipes = new ArrayList<Recipe>();
+    private List<RecipeORMEntity> recipes = new ArrayList<RecipeORMEntity>();
 
     @ManyToMany
     private Set<UserORMEntity> following = new HashSet<UserORMEntity>();
@@ -36,12 +37,72 @@ public class UserORMEntity {
     public UserORMEntity() {
     }
 
-    public UserORMEntity(String name, String password, String email, List<Recipe> recipes, Set<UserORMEntity> following, Set<UserORMEntity> followers) {
+    public UserORMEntity(String name, String password, String email, List<RecipeORMEntity> recipes, Set<UserORMEntity> following, Set<UserORMEntity> followers) {
         this.name = name;
         this.password = password;
         this.email = email;
         this.recipes = recipes;
         this.following = following;
         this.followers= followers;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public List<RecipeORMEntity> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(List<RecipeORMEntity> recipes) {
+        this.recipes = recipes;
+    }
+
+    public Set<UserORMEntity> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(Set<UserORMEntity> following) {
+        this.following = following;
+    }
+
+    public void addRecipe(RecipeORMEntity recipe) {
+        recipes.add(recipe);
+    }
+
+    public void addFollowing(UserORMEntity user) {
+        following.add(user);
+    }
+
+    public void addFollowers(UserORMEntity user){
+        followers.add(user);
+    }
+
+    public void removeFollowing(UserORMEntity user) {
+        following.remove(user);
+    }
+
+    public void removeFollowers(UserORMEntity user){
+        followers.remove(user);
     }
 }

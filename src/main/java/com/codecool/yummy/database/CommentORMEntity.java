@@ -18,7 +18,7 @@ public class CommentORMEntity {
     private long id;
 
     @OneToOne
-    private User user;
+    private UserORMEntity user;
 
     private Date date;
 
@@ -26,7 +26,7 @@ public class CommentORMEntity {
 
     public CommentORMEntity() {}
 
-    public CommentORMEntity(User user, Date date, String comment) {
+    public CommentORMEntity(UserORMEntity user, Date date, String comment) {
         this.user = user;
         this.date = date;
         this.comment = comment;
