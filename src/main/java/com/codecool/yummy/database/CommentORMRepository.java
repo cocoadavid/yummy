@@ -9,6 +9,6 @@ import java.util.List;
  */
 public interface CommentORMRepository extends CrudRepository<CommentORMEntity, Long> {
 
-    List<CommentORMEntity> findByUser(UserORMEntity user);
+    List<CommentORMEntity> findCommentByUser(UserORMEntity user);
 
 }

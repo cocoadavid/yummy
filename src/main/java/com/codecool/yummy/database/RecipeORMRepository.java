@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface RecipeORMRepository extends CrudRepository<RecipeORMEntity, Long> {
 
-    List<RecipeORMEntity> findByName(String name);
+    List<RecipeORMEntity> findRecipeByName(String name);
     List<RecipeORMEntity> findByCategory(String category);
     List<RecipeORMEntity> findByUser(UserORMEntity user);
 }
