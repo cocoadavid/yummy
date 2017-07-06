@@ -2,15 +2,14 @@ package com.codecool.yummy.database;
 
 import com.codecool.yummy.model.User;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * Created by szilarddavid on 2017.07.06..
  */
+
+@Entity
 public class CommentORMEntity {
 
     @Id
