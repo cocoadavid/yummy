@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * Created by szilarddavid on 2017.07.06..
  */
-@Entity(name = "person")
+@Entity
 public class UserORMEntity {
 
     @Id
