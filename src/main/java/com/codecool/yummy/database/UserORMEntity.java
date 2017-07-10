@@ -1,8 +1,5 @@
 package com.codecool.yummy.database;
 
-import com.codecool.yummy.model.Recipe;
-import com.codecool.yummy.model.User;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;

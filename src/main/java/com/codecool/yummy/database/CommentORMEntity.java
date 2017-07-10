@@ -1,7 +1,5 @@
 package com.codecool.yummy.database;
 
-import com.codecool.yummy.model.User;
-
 import javax.persistence.*;
 import java.util.Date;
 

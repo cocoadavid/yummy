@@ -1,9 +1,5 @@
 package com.codecool.yummy.database;
 
-import com.codecool.yummy.model.Comment;
-import com.codecool.yummy.model.Picture;
-import com.codecool.yummy.model.User;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
