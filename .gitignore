@@ -27,4 +27,3 @@ lib/
 src/test/
 target/
 *.iml
-/.idea/workspace.xml
