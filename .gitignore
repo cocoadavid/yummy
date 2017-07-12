@@ -26,3 +26,4 @@ conf/
 lib/
 src/test/
 target/
+*.iml

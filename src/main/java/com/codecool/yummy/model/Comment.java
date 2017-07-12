@@ -4,13 +4,13 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Created by flavia on 2017.06.21..
+ * Created by szilarddavid on 2017.07.12..
  */
-@Entity
+@Entity(name = "comments")
 public class Comment {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "comment_id")
     private long id;
 
     @OneToOne
@@ -20,13 +20,8 @@ public class Comment {
 
     private String comment;
 
-    public Comment() {}
+    /////////////// GETTERS - SETTERS /////////////////////
 
-    public Comment(User user, Date date, String comment) {
-        this.user = user;
-        this.date = date;
-        this.comment = comment;
-    }
 
     public long getId() {
         return id;
@@ -59,5 +54,4 @@ public class Comment {
     public void setComment(String comment) {
         this.comment = comment;
     }
-
 }

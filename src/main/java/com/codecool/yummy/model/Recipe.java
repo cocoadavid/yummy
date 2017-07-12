@@ -1,16 +1,19 @@
 package com.codecool.yummy.model;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
- * Created by flavia on 2017.06.21..
+ * Created by szilarddavid on 2017.07.12..
  */
-@Entity
-public class Recipe {
 
+@Entity(name = "recipes")
+public class Recipe {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="recipe_id")
     private long id;
 
     private String name;
@@ -22,10 +25,6 @@ public class Recipe {
     private Date date;
 
     @OneToMany
-//    @JoinTable(
-//            name = "PictureToRecipe",
-//            joinColumns = @JoinColumn(name = "Recipe"),
-//            inverseJoinColumns = @JoinColumn(name = "Picture"))
     private List<Picture> pictures = new ArrayList<Picture>();
 
     @OneToMany
@@ -36,18 +35,7 @@ public class Recipe {
     @ManyToOne
     private User user;
 
-    public Recipe() {}
-
-    public Recipe(String name, String description, String category, Date date, List<Picture> pictures, List<Comment> comments, int yummy, User user) {
-        this.name = name;
-        this.description = description;
-        this.category = category;
-        this.date = date;
-        this.pictures = pictures;
-        this.comments = comments;
-        this.yummy = yummy;
-        this.user = user;
-    }
+    /////////////// GETTERS - SETTERS //////////////////////
 
     public long getId() {
         return id;
@@ -63,22 +51,6 @@ public class Recipe {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Picture> getPictures() {
-        return pictures;
-    }
-
-    public void setPictures(List<Picture> pictures) {
-        this.pictures = pictures;
-    }
-
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
     }
 
     public String getDescription() {
@@ -105,19 +77,19 @@ public class Recipe {
         this.date = date;
     }
 
-    public List<Picture> getPicture() {
+    public List<Picture> getPictures() {
         return pictures;
     }
 
-    public void setPicture(List<Picture> pictures) {
+    public void setPictures(List<Picture> pictures) {
         this.pictures = pictures;
     }
 
-    public List<Comment> getComment() {
+    public List<Comment> getComments() {
         return comments;
     }
 
-    public void setComment(List<Comment> comments) {
+    public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
 
@@ -141,16 +113,15 @@ public class Recipe {
         pictures.add(picture);
     }
 
-    public void addComment(Comment comment) {
-        comments.add(comment);
-    }
-
     public void removePicture(Picture picture) {
         pictures.remove(picture);
+    }
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
     }
 
     public void removeComment(Comment comment) {
         comments.remove(comment);
     }
-
 }

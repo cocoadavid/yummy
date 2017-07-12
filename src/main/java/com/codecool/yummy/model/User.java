@@ -1,62 +1,80 @@
 package com.codecool.yummy.model;
 
-import javax.jws.soap.SOAPBinding;
+import java.util.*;
+
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
-/**
- * Created by szilarddavid on 2017.06.21..
- */
-@Entity(name = "person")
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.data.annotation.Transient;
+
+@Entity
+@Table(name = "users")
 public class User {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "user_id")
+    private int id;
 
-    private String name;
+    @Column(name = "email")
+    @Email(message = "*Please provide a valid email.")
+    @NotEmpty(message = "*Please provide an email.")
+    private String email;
 
+    @Column(name = "password")
+    @Length(min = 5, message = "*Your password must have at least 5 characters.")
+    @NotEmpty(message = "*Please provide your password.")
+    @Transient
     private String password;
 
+    @Column(name = "username")
+    @NotEmpty(message = "*Please provide your username.")
+    private String username;
+
+    @Column(name = "first_name")
+    @NotEmpty(message = "*Please provide your first name.")
+    private String firstName;
+
+    @Column(name = "last_name")
+    @NotEmpty(message = "*Please provide your last name.")
+    private String lastName;
+
+    @Column(name = "active")
+    private int active;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
+
+    @Column(name = "recipes")
     @OneToMany
-    private List<Recipe> recipes = new ArrayList<Recipe>();
+    private List<Recipe> recipes;
 
+    @Column(name = "followers")
     @ManyToMany
-    private Set<User> following = new HashSet<User>();
+    private List<User> followers;
 
+    @Column(name = "following")
     @ManyToMany
-    private Set<User> followers = new HashSet<User>();
+    private List<User> following;
 
-    public User() {
-    }
+    /////////////// GETTERS - SETTERS //////////////////////
 
-    public User(String name, String password, List<Recipe> recipes, Set<User> following,Set<User> followers) {
-        this.name = name;
-        this.password = password;
-        this.recipes = recipes;
-        this.following = following;
-        this.followers= followers;
-    }
-
-
-
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getEmail() {
+        return email;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -67,6 +85,46 @@ public class User {
         this.password = password;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
     public List<Recipe> getRecipes() {
         return recipes;
     }
@@ -75,32 +133,53 @@ public class User {
         this.recipes = recipes;
     }
 
-    public Set<User> getFollowing() {
+    public List<User> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<User> followers) {
+        this.followers = followers;
+    }
+
+    public List<User> getFollowing() {
         return following;
     }
 
-    public void setFollowing(Set<User> following) {
+    public void setFollowing(List<User> following) {
         this.following = following;
     }
 
-    public void addRecipe(Recipe recipe) {
-        recipes.add(recipe);
+    /////////////// SUPPORTING METHODS //////////////////////
+
+    public void addRecipe(Recipe recipe) { recipes.add(recipe); }
+
+    public void removeRecipe(Recipe recipe) { recipes.remove(recipe); }
+
+    public void addFollower(User user) { followers.add(user); }
+
+    public void removeFollower(User user) { followers.remove(user); }
+
+    public void addFollowing(User user) { following.add(user); }
+
+    public void removeFollowing(User user) { following.remove(user); }
+
+    public List<Recipe> followedRecipes() {
+        List<Recipe> recipes = new ArrayList<Recipe>();
+        for (User user : following) {
+            for (Recipe recipe : user.getRecipes()) {
+                recipes.add(recipe);
+            }
+        }
+
+        Collections.sort(recipes, new Comparator<Recipe>() {
+            @Override
+            public int compare(Recipe o1, Recipe o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });
+
+        return recipes;
     }
 
-    public void addFollowing(User user) {
-        following.add(user);
-    }
-
-    public void addFollowers(User user){
-        followers.add(user);
-    }
-
-    public void removeFollowing(User user) {
-        following.remove(user);
-    }
-
-    public void removeFollowers(User user){
-        followers.remove(user);
-    }
 
 }
