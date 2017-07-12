@@ -5,6 +5,7 @@ import com.codecool.yummy.model.User;
 import com.codecool.yummy.repository.RoleRepository;
 import com.codecool.yummy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,16 +18,25 @@ import java.util.HashSet;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
+    @Qualifier("userRepository")
     @Autowired
     private UserRepository userRepository;
+
+    @Qualifier("roleRepository")
     @Autowired
     private RoleRepository roleRepository;
+
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User findUserByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
     @Override

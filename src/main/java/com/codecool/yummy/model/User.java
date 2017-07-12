@@ -37,7 +37,7 @@ public class User {
     @Transient
     private String password;
 
-    @Column(name = "username", unique = true)
+    @Column(name = "username")
     @NotEmpty(message = "*Please provide your username.")
     private String username;
 
@@ -55,6 +55,8 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
+    /////////////// GETTERS - SETTERS //////////////////////
 
     public int getId() {
         return id;
