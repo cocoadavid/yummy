@@ -1,29 +1,30 @@
-package com.codecool.yummy.database;
+package com.codecool.yummy.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
- * Created by szilarddavid on 2017.07.06..
+ * Created by szilarddavid on 2017.07.12..
  */
-@Entity
-public class PictureORMEntity {
-
+@Entity(name = "pictures")
+public class Picture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="picture_id")
     private long id;
 
     private String name;
 
     private String path;
 
-    public PictureORMEntity() {}
+    /////////////// GETTERS - SETTERS //////////////////////
 
-    public PictureORMEntity(String name, String path) {
-        this.name = name;
-        this.path = path;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
