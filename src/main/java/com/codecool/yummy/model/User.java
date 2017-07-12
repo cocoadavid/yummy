@@ -1,17 +1,8 @@
 package com.codecool.yummy.model;
 
-import java.util.Set;
+import java.util.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
@@ -55,6 +46,18 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+
+    @Column(name = "recipes")
+    @OneToMany
+    private List<Recipe> recipes;
+
+    @Column(name = "followers")
+    @ManyToMany
+    private List<User> followers;
+
+    @Column(name = "following")
+    @ManyToMany
+    private List<User> following;
 
     /////////////// GETTERS - SETTERS //////////////////////
 
@@ -121,4 +124,62 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+    public List<Recipe> getRecipes() {
+        return recipes;
+    }
+
+    public void setRecipes(List<Recipe> recipes) {
+        this.recipes = recipes;
+    }
+
+    public List<User> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<User> followers) {
+        this.followers = followers;
+    }
+
+    public List<User> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(List<User> following) {
+        this.following = following;
+    }
+
+    /////////////// SUPPORTING METHODS //////////////////////
+
+    public void addRecipe(Recipe recipe) { recipes.add(recipe); }
+
+    public void removeRecipe(Recipe recipe) { recipes.remove(recipe); }
+
+    public void addFollower(User user) { followers.add(user); }
+
+    public void removeFollower(User user) { followers.remove(user); }
+
+    public void addFollowing(User user) { following.add(user); }
+
+    public void removeFollowing(User user) { following.remove(user); }
+
+    public List<Recipe> followedRecipes() {
+        List<Recipe> recipes = new ArrayList<Recipe>();
+        for (User user : following) {
+            for (Recipe recipe : user.getRecipes()) {
+                recipes.add(recipe);
+            }
+        }
+
+        Collections.sort(recipes, new Comparator<Recipe>() {
+            @Override
+            public int compare(Recipe o1, Recipe o2) {
+                return o2.getDate().compareTo(o1.getDate());
+            }
+        });
+
+        return recipes;
+    }
+
+
 }
