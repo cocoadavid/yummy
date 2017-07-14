@@ -11,11 +11,6 @@
   border: 3px dotted rgba(0,0,0,0.1);  
   }
 
-.form-signin-heading {
-  text-align:center;
-  margin-bottom: 30px;
-}
-
 .form-control {
   position: relative;
   font-size: 16px;
