@@ -3,7 +3,6 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<<<<<<< HEAD
 	<title>Yummy</title>
 	<link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
@@ -15,11 +14,11 @@
 	<!--<form th:action="@{/registration}" method="get">-->
 		<!--<button class="btn btn-md btn-warning btn-block" type="Submit">Go To Registration Page</button>-->
 	<!--</form>	-->
+	<!-------HEADER------->
+	<div class="header">
+		<img th:src="@{/images/logo/yummy_header.png}">
+	</div>
 	<div class="container-fluid">
-		<!-------HEADER------->
-		<div class="header">
-			<img th:src="@{/images/logo/yummy_header.png}">
-		</div>
 		<!-------LOGIN FORM------->
 		<div class="login-form">
 			<form th:action="@{/login}" method="POST" >

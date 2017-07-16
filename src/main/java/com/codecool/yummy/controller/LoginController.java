@@ -69,6 +69,7 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("username", user.getUsername());
         modelAndView.addObject("userName", "Welcome " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + "), alias " + user.getUsername());
         modelAndView.addObject("userMessage","Content Available Only for Users");
         modelAndView.setViewName("home");
