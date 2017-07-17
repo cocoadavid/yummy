@@ -48,15 +48,15 @@ public class User {
     private Set<Role> roles;
 
     @Column(name = "recipes")
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.ALL})
     private List<Recipe> recipes;
 
     @Column(name = "followers")
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL})
     private List<User> followers;
 
     @Column(name = "following")
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL})
     private List<User> following;
 
     /////////////// GETTERS - SETTERS //////////////////////
@@ -151,7 +151,9 @@ public class User {
 
     /////////////// SUPPORTING METHODS //////////////////////
 
-    public void addRecipe(Recipe recipe) { recipes.add(recipe); }
+    public void addRecipe(Recipe recipe) {
+        recipes.add(recipe);;
+    }
 
     public void removeRecipe(Recipe recipe) { recipes.remove(recipe); }
 
@@ -165,6 +167,11 @@ public class User {
 
     public List<Recipe> followedRecipes() {
         List<Recipe> recipes = new ArrayList<Recipe>();
+
+        for (Recipe recipe : this.getRecipes()) {
+            recipes.add(recipe);
+        }
+
         for (User user : following) {
             for (Recipe recipe : user.getRecipes()) {
                 recipes.add(recipe);

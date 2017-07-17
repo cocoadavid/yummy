@@ -32,8 +32,10 @@ public class Recipe {
 
     private int yummy;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     private User user;
+
+    public Recipe(){}
 
     /////////////// GETTERS - SETTERS //////////////////////
 

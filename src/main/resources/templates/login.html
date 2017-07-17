@@ -20,7 +20,8 @@
 	</div>
 	<div class="container-fluid">
 		<!-------SUCCESS MESSAGE -->
-		<div th:if="${successMessage}" class="alert alert-success">
+		<div th:if="${successMessage}" class="alert alert-success alert-dismissable">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 			<strong>You have succesfully created your account, log in!</strong>
 		</div>
 		<!-------LOGIN FORM------->
