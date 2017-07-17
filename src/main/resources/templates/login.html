@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title>Spring Security Tutorial</title>
+	<title>Yummy</title>
 	<link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -14,18 +14,20 @@
 	<!--<form th:action="@{/registration}" method="get">-->
 		<!--<button class="btn btn-md btn-warning btn-block" type="Submit">Go To Registration Page</button>-->
 	<!--</form>	-->
+	<!-------HEADER------->
+	<div class="header">
+		<img th:src="@{/images/logo/yummy_header.png}">
+	</div>
 	<div class="container-fluid">
-		<!-------HEADER------->
-		<div class="header">
-			<img th:src="@{/images/logo/yummy_header.png}">
+		<!-------SUCCESS MESSAGE -->
+		<div th:if="${successMessage}" class="alert alert-success">
+			<strong>You have succesfully created your account, log in!</strong>
 		</div>
 		<!-------LOGIN FORM------->
 		<div class="login-form">
 			<form th:action="@{/login}" method="POST" >
-				<!--<h3 style="color: #FF6666; text-align: center;">Log in</h3>-->
 				<img th:src="@{/images/logo/yummy_red.png}" class="img-responsive center-block" width="80%" alt="Yummy" />
 				<br/>
-
 				<input type="text" id="email" name="email"  th:placeholder="Email"
 					class="form-control" autofocus /> <br/>
 				<input type="password"  th:placeholder="Password"

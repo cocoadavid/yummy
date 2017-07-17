@@ -56,9 +56,9 @@ public class LoginController {
             modelAndView.setViewName("registration");
         } else {
             userService.saveUser(user);
-            modelAndView.addObject("successMessage", "User has been registered successfully. <a href='/'> Log in! <a/>");
+            modelAndView.addObject("successMessage", 1);
             modelAndView.addObject("user", new User());
-            modelAndView.setViewName("registration");
+            modelAndView.setViewName("login");
 
         }
         return modelAndView;
@@ -69,6 +69,7 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("username", user.getUsername());
         modelAndView.addObject("userName", "Welcome " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + "), alias " + user.getUsername());
         modelAndView.addObject("userMessage","Content Available Only for Users");
         modelAndView.setViewName("home");

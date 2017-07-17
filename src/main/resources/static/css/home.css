@@ -1,3 +1,17 @@
+.navbar {
+	background-color: #FF6666;
+	font-size: larger;
+}
+
+.hover-bold a:hover {
+	color: white !important;
+	font-weight: bold !important;
+}
+
+#img-home {
+	margin-top: -5px;
+}
+
 .admin-message-text {
 	font-style: normal;
 	font-size: 22px;
