@@ -19,13 +19,15 @@
 		<img th:src="@{/images/logo/yummy_header.png}">
 	</div>
 	<div class="container-fluid">
+		<!-------SUCCESS MESSAGE -->
+		<div th:if="${successMessage}" class="alert alert-success">
+			<strong>You have succesfully created your account, log in!</strong>
+		</div>
 		<!-------LOGIN FORM------->
 		<div class="login-form">
 			<form th:action="@{/login}" method="POST" >
-				<!--<h3 style="color: #FF6666; text-align: center;">Log in</h3>-->
 				<img th:src="@{/images/logo/yummy_red.png}" class="img-responsive center-block" width="80%" alt="Yummy" />
 				<br/>
-
 				<input type="text" id="email" name="email"  th:placeholder="Email"
 					class="form-control" autofocus /> <br/>
 				<input type="password"  th:placeholder="Password"
