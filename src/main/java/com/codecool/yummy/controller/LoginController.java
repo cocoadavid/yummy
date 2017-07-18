@@ -1,6 +1,8 @@
 package com.codecool.yummy.controller;
 
+import com.codecool.yummy.model.Recipe;
 import com.codecool.yummy.model.User;
+import com.codecool.yummy.service.RecipeService;
 import com.codecool.yummy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -22,6 +24,9 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RecipeService recipeService;
 
     @RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
     public ModelAndView login(){
@@ -56,9 +61,9 @@ public class LoginController {
             modelAndView.setViewName("registration");
         } else {
             userService.saveUser(user);
-            modelAndView.addObject("successMessage", "User has been registered successfully. <a href='/'> Log in! <a/>");
+            modelAndView.addObject("successMessage", 1);
             modelAndView.addObject("user", new User());
-            modelAndView.setViewName("registration");
+            modelAndView.setViewName("login");
 
         }
         return modelAndView;
@@ -69,9 +74,44 @@ public class LoginController {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        modelAndView.addObject("userName", "Welcome " + user.getFirstName() + " " + user.getLastName() + " (" + user.getEmail() + "), alias " + user.getUsername());
+        modelAndView.addObject("username", user.getUsername());
         modelAndView.addObject("userMessage","Content Available Only for Users");
         modelAndView.setViewName("home");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/new_recipe", method = RequestMethod.GET)
+    public ModelAndView newRecipe() {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        Recipe recipe = new Recipe();
+        modelAndView.addObject("recipe", recipe);
+        modelAndView.addObject("username", user.getUsername());
+        modelAndView.addObject("legend", "New Recipe");
+        modelAndView.addObject("button", "Create Recipe");
+        modelAndView.setViewName("recipe_form");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/new_recipe", method = RequestMethod.POST)
+    public ModelAndView createNewRecipe(@Valid Recipe recipe, BindingResult bindingResult) {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        if(bindingResult.hasErrors()) {
+            modelAndView.setViewName("recipe_form");
+        } else {
+            recipe.setUser(user);
+            recipeService.saveRecipe(recipe);
+            user.addRecipe(recipe);
+            userService.updateUser(user);
+            modelAndView.addObject("success", 1);
+            modelAndView.addObject("legend", "New Recipe");
+            modelAndView.addObject("username", user.getUsername());
+            modelAndView.addObject("button", "Create Recipe");
+            modelAndView.setViewName("recipe_form");
+        }
         return modelAndView;
     }
 }

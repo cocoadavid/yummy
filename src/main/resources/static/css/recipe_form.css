@@ -1,0 +1,21 @@
+.navbar {
+    background-color: #FF6666;
+    font-size: larger;
+}
+
+.alert-success {
+    text-align: center;
+}
+
+#img-home {
+    margin-top: -5px;
+}
+
+.hover-bold a:hover {
+    color: white !important;
+    font-weight: bold !important;
+}
+
+legend {
+    color: #FF6666;
+}
