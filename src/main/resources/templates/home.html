@@ -47,25 +47,36 @@
 		<!-------currently with 2 example recipes------->
 		<div class="row" style="max-width: 1280px; margin-left: auto; margin-right: auto; display: table;">
 			<!--Recipe1-->
-			<div class="col-md-6">
-				<div style="width: 400px; margin-left: auto; margin-right: auto; display: table;">
-					<h4 style="margin-left: 15px; color: #FF6666; float: left;">MaciLaci</h4>
-				</div>
-				<div style="background-color: #FF6666; height: 500px; width: 400px; border-radius: 5px;
-margin-bottom: 40px; margin-left: auto; margin-right: auto; display: table;">
-					<h3 style="color: white; font-weight: bold; margin-left: 10px; margin-top: 5px;">Best Recept Evör</h3>
-					<img th:src="@{/images/food/kaja1.jpg}" width="100%" alt="Yummy" />
-				</div>
-			</div>
+			<!--<div class="col-md-6">-->
+				<!--<div style="width: 400px; margin-left: auto; margin-right: auto; display: table;">-->
+					<!--<h4 style="margin-left: 15px; color: #FF6666; float: left;">MaciLaci</h4>-->
+				<!--</div>-->
+				<!--<div style="background-color: #FF6666; height: 500px; width: 400px; border-radius: 5px;-->
+<!--margin-bottom: 40px; margin-left: auto; margin-right: auto; display: table;">-->
+					<!--<h3 style="color: white; font-weight: bold; margin-left: 10px; margin-top: 5px;">Best Recept Evör</h3>-->
+					<!--<img th:src="@{/images/food/kaja1.jpg}" width="100%" alt="Yummy" />-->
+				<!--</div>-->
+			<!--</div>-->
 			<!--Recipe2-->
-			<div class="col-md-6">
+			<!--<div class="col-md-6">-->
+				<!--<div style="width: 400px; margin-left: auto; margin-right: auto; display: table;">-->
+					<!--<h4 style="margin-left: 15px; color: #FF6666; float: left;">Sanyi Amacska</h4>-->
+				<!--</div>-->
+				<!--<div style="background-color: #FF6666; height: 500px; width: 400px; border-radius: 5px;-->
+<!--margin-bottom: 40px; margin-left: auto; margin-right: auto; display: table;">-->
+					<!--<h3 style="color: white; font-weight: bold; margin-left: 10px; margin-top: 5px;">Henger with yellow stuff</h3>-->
+					<!--<img th:src="@{/images/food/kaja2.jpg}" width="100%" alt="Yummy" />-->
+				<!--</div>-->
+			<!--</div>-->
+			<!--Iteration-->
+			<div class="col-md-6" th:each="recipe, iterStat : ${recipes}">
 				<div style="width: 400px; margin-left: auto; margin-right: auto; display: table;">
-					<h4 style="margin-left: 15px; color: #FF6666; float: left;">Sanyi Amacska</h4>
+					<h4 th:text="${recipe.user.username}" style="margin-left: 15px; color: #FF6666; float: left;"></h4>
 				</div>
 				<div style="background-color: #FF6666; height: 500px; width: 400px; border-radius: 5px;
 margin-bottom: 40px; margin-left: auto; margin-right: auto; display: table;">
-					<h3 style="color: white; font-weight: bold; margin-left: 10px; margin-top: 5px;">Henger with yellow stuff</h3>
-					<img th:src="@{/images/food/kaja2.jpg}" width="100%" alt="Yummy" />
+					<h3 th:text="${recipe.name}" style="color: white; font-weight: bold; margin-left: 10px; margin-top: 5px;"></h3>
+					<img th:src="@{/images/food/kaja1.jpg}" width="100%" alt="Yummy" />
 				</div>
 			</div>
 

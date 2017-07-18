@@ -75,7 +75,7 @@ public class LoginController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         modelAndView.addObject("username", user.getUsername());
-        modelAndView.addObject("userMessage","Content Available Only for Users");
+        modelAndView.addObject("recipes", user.getFollowedRecipes());
         modelAndView.setViewName("home");
         return modelAndView;
     }
