@@ -8,5 +8,6 @@ import com.codecool.yummy.model.Recipe;
 public interface RecipeService {
 
     public Recipe findRecipeByName(String name);
+    public Recipe findRecipeById(Long id);
     public void saveRecipe(Recipe recipe);
 }
