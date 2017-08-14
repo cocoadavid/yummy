@@ -165,7 +165,7 @@ public class User {
 
     public void removeFollowing(User user) { following.remove(user); }
 
-    public List<Recipe> followedRecipes() {
+    public List<Recipe> getFollowedRecipes() {
         List<Recipe> recipes = new ArrayList<Recipe>();
 
         for (Recipe recipe : this.getRecipes()) {
