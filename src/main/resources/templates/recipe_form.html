@@ -49,6 +49,18 @@
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <strong>You have successfully created a new recipe!</strong>
     </div>
+
+    <!--UPLOAD-->
+    <div>
+        <form method="POST" enctype="multipart/form-data" action="/">
+            <table>
+                <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+                <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+            </table>
+        </form>
+    </div>
+
+
     <!-------FORM -->
     <form action="#" th:action="@{/new_recipe}" th:object="${recipe}" method="post">
         <fieldset>
