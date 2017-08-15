@@ -10,7 +10,56 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<h3 th:text="${recipe.name}"></h3>
-Yo!
+<!-------NAVBAR------->
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a id="img-home" class="navbar-brand" href="/home"><img th:src="@{/images/logo/yummy_white.png}" height="150%" alt="Yummy" /></a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="hover-bold"><a href="#" class="hover-bold" th:text="${username}"></a></li>
+                <li class="hover-bold"><a href="/new_recipe" class="hover-bold">New Recipe</a></li>
+            </ul>
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search Users">
+                </div>
+                <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-search"></span></button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="hover-bold"><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-------END OF NAVBAR------->
+<div class="container-fluid">
+    <div class="row">
+        <h2 th:text="${recipe.name}" id="fade1" style="display: none"></h2>
+        <div class="col-sm-6" id="fade2" style="display: none">
+            <img th:src="@{/images/food/kaja1.jpg}" width="100%"/>
+        </div>
+        <div class="cols-sm-6" id="fade3" style="display: none">
+            <p th:text="${recipe.description}" style="white-space: pre"></p>
+        </div>
+    </div>
+</div>
+
+<!-- JAVASCRIPT -->
+<script>
+    $(document).ready(function(){
+        $("#fade1").fadeIn(1000);
+        $("#fade2").fadeIn(2000);
+        $("#fade3").fadeIn(3000);
+    });
+</script>
 </body>
 </html>

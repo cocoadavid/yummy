@@ -122,6 +122,7 @@ public class LoginController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         Recipe recipe = recipeService.findRecipeById(id);
+        modelAndView.addObject("username", user.getUsername());
         modelAndView.addObject("recipe", recipe);
         modelAndView.setViewName("recipe");
         return modelAndView;
