@@ -23,6 +23,8 @@ public class RecipeServiceImpl implements RecipeService {
         return recipeRepository.findRecipeByName(name);
     }
 
+    public Recipe findRecipeById(Long id) {return recipeRepository.findRecipeById(id);}
+
     @Override
     public void saveRecipe(Recipe recipe) {
         recipe.setDate(new Date());

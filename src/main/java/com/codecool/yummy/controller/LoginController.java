@@ -5,6 +5,7 @@ import com.codecool.yummy.model.User;
 import com.codecool.yummy.service.RecipeService;
 import com.codecool.yummy.service.StorageService;
 import com.codecool.yummy.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -127,6 +129,18 @@ public class LoginController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/recipe/{id}", method = RequestMethod.GET)
+    public ModelAndView showRecipe(@PathVariable long id){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        Recipe recipe = recipeService.findRecipeById(id);
+        modelAndView.addObject("username", user.getUsername());
+        modelAndView.addObject("recipe", recipe);
+        modelAndView.setViewName("recipe");
+        return modelAndView;
+    }
+
     @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file, Model model) {
         try {
@@ -147,6 +161,5 @@ public class LoginController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
                 .body(file);
     }
-//    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-//    public void
+
 }
