@@ -94,6 +94,17 @@ public class LoginController {
         return modelAndView;
     }
 
+    @RequestMapping(value="/profile/{username}", method = RequestMethod.GET)
+    public ModelAndView profile() {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("username", user.getUsername());
+        modelAndView.addObject("recipes", user.getRecipes());
+        modelAndView.setViewName("profile");
+        return modelAndView;
+    }
+
     @RequestMapping(value = "/new_recipe", method = RequestMethod.GET)
     public ModelAndView newRecipe() {
         ModelAndView modelAndView = new ModelAndView();
