@@ -127,7 +127,7 @@ public class LoginController {
         return modelAndView;
     }
 
-    @PostMapping("/")
+    @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file, Model model) {
         try {
             storageService.store(file);

@@ -23,7 +23,7 @@ public class StorageService {
 
     public void store(MultipartFile file){
         try {
-            Files.copy(file.getInputStream(), this.rootLocation.resolve(file.getOriginalFilename()));
+            Files.copy(file.getInputStream(), this.rootLocation.resolve("sanyika"));
         } catch (Exception e) {
             throw new RuntimeException("FAIL!");
         }
