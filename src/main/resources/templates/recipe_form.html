@@ -50,6 +50,12 @@
         <strong>You have successfully created a new recipe!</strong>
     </div>
     <!-------FORM -->
+    <form method="POST" enctype="multipart/form-data" th:action="/">
+        <table>
+            <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+            <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+        </table>
+    </form>
     <form action="#" th:action="@{/new_recipe}" th:object="${recipe}" method="post">
         <fieldset>
             <legend th:text="${legend}"></legend>

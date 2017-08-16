@@ -4,16 +4,32 @@ import com.codecool.yummy.model.Recipe;
 import com.codecool.yummy.model.User;
 import com.codecool.yummy.service.RecipeService;
 import com.codecool.yummy.service.UserService;
+import com.codecool.yummy.storage.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
 
+import javax.imageio.ImageIO;
 import javax.validation.Valid;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by szilarddavid on 2017.07.11..
@@ -27,6 +43,11 @@ public class LoginController {
 
     @Autowired
     private RecipeService recipeService;
+
+    @Autowired
+    StorageService storageService;
+
+    List<String> files = new ArrayList<String>();
 
     @RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
     public ModelAndView login(){
@@ -114,4 +135,30 @@ public class LoginController {
         }
         return modelAndView;
     }
+
+//    FIRST VERSION OF IMAGE UPLOADING
+//    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+//    public void handleFormUpload(
+//            @RequestParam("file") MultipartFile file) throws IOException {
+//        if (!file.isEmpty()) {
+//            BufferedImage src = ImageIO.read(new ByteArrayInputStream(file.getBytes()));
+//            File destination = new File("image_id.png"); // something like C:/Users/tom/Documents/nameBasedOnSomeId.png
+//            System.out.println(destination.exists());
+//            ImageIO.write(src, "png", destination);
+//            //Save the id you have used to create the file name in the DB. You can retrieve the image in future with the ID.
+//        }
+//    }
+
+    @PostMapping("/")
+    public String handleFileUpload(@RequestParam("file") MultipartFile file, Model model) {
+        try {
+            storageService.store(file);
+            model.addAttribute("message", "You successfully uploaded " + file.getOriginalFilename() + "!");
+            files.add(file.getOriginalFilename());
+        } catch (Exception e) {
+            model.addAttribute("message", "FAIL to upload " + file.getOriginalFilename() + "!");
+        }
+        return "uploadForm";
+    }
+
 }
