@@ -32,7 +32,7 @@
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Search Users">
                 </div>
-                <button type="submit" class="btn btn-info"><span class="glyphicon glyphicon-search"></span></button>
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <li class="hover-bold"><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
@@ -49,10 +49,10 @@
         </div>
         <div class="col-sm-6" style="margin-top: 8px; display: inline-block;">
             <h1 th:text="${username}" style="font-weight: bold;"></h1>
-            <h5 th:text="${numberOfRecipes} + ' recipes   ' + ${numberOfFollowers} + ' followers   ' + ${numberOfFollowing} + ' following'"></h5>
+            <h5><span class="badge" th:text="${numberOfRecipes}"></span><th:text style="margin-right: 4px"> recipes </th:text><span class="badge" th:text="${numberOfFollowers}"></span><th:text style="margin-right: 4px"> followers </th:text><span class="badge" th:text="${numberOfFollowing}"></span><th:text style="margin-right: 4px"> following </th:text></h5>
         </div>
         <div class="col-sm-2" style="margin-top:35px; display: inline-block">
-            <button type="button" style="background-color: #FF6666; color: white;" class="btn btn-sm">Edit Profile</button>
+            <button type="button" style="color: white;" class="btn btn-sm btn-primary">Edit Profile</button>
         </div>
     </div>
     <!-------RECIPES------->
