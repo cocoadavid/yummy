@@ -40,6 +40,9 @@ public class User {
     @NotEmpty(message = "*Please provide your last name.")
     private String lastName;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "active")
     private int active;
 
@@ -108,6 +111,10 @@ public class User {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) { this.description = description; }
 
     public int getActive() {
         return active;
@@ -188,5 +195,10 @@ public class User {
         return recipes;
     }
 
+    public int getNumberOfRecipes(List<Recipe> recipes) { return recipes.size(); }
+
+    public int getNumberOfFollowers(List<User> followers) { return followers.size(); }
+
+    public int getNumberOfFollowing(List<User> following) { return following.size(); }
 
 }
