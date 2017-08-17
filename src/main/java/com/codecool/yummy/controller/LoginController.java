@@ -101,6 +101,9 @@ public class LoginController {
         User user = userService.findUserByEmail(auth.getName());
         modelAndView.addObject("username", user.getUsername());
         modelAndView.addObject("recipes", user.getRecipes());
+        modelAndView.addObject("numberOfRecipes", user.getNumberOfRecipes(user.getRecipes()));
+        modelAndView.addObject("numberOfFollowers", user.getNumberOfFollowers(user.getFollowers()));
+        modelAndView.addObject("numberOfFollowing", user.getNumberOfFollowing(user.getFollowing()));
         modelAndView.setViewName("profile");
         return modelAndView;
     }
