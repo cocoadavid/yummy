@@ -57,6 +57,9 @@
     </div>
     <!-------RECIPES------->
     <div class="row" style="max-width: 1280px; margin-left: auto; margin-right: auto; display: table;">
+        <div th:if="${recipes.empty}">
+            <h1>No Recipes Yet</h1>
+        </div>
         <!--Iteration-->
         <div class="col-md-6" th:each="recipe, iterStat : ${recipes}">
             <div style="background-color: #FF6666; height: 500px; width: 400px; border-radius: 5px;
