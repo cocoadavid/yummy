@@ -1,14 +1,15 @@
-<!DOCTYPE html>
+<DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Yummy Recipe</title>
+    <title>Yummy</title>
     <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+
 <body>
 <!-------NAVBAR------->
 <nav class="navbar navbar-default">
@@ -25,7 +26,7 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li <li class="hover-bold"><a th:href="'/profile/' + ${username}" class="hover-bold" th:text="${username}"></a></li>
+                <li class="hover-bold"><a th:href="'/profile/' + ${username}" class="hover-bold" th:text="${username}"></a></li>
                 <li class="hover-bold"><a href="/new_recipe" class="hover-bold">New Recipe</a></li>
             </ul>
             <form class="navbar-form navbar-left" action="/search" method="POST">
@@ -42,24 +43,25 @@
 </nav>
 <!-------END OF NAVBAR------->
 <div class="container-fluid">
-    <div class="row">
-        <h2 th:text="${recipe.name}" id="fade1" style="display: none"></h2>
-        <div class="col-sm-6" id="fade2" style="display: none">
-            <img th:src="@{/images/food/kaja1.jpg}" width="100%"/>
-        </div>
-        <div class="cols-sm-6" id="fade3" style="display: none">
-            <p th:text="${recipe.description}" style="white-space: pre"></p>
+    <!-------FEED------->
+    <div class="row" style="max-width: 1280px; margin-left: auto; margin-right: auto; display: table;">
+        <!--Iteration-->
+        <div class="col-md-6" th:each="searchedUser, iterStat : ${searchedUsers}">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="col-xs-12 col-sm-3">
+                        <a th:href="'/profile/' + ${searchedUser.username}">
+                            <img th:src="@{/images/profile/default_profile_picture.png}" width="100%" alt="Yummy" />
+                        </a></div>
+                    <div class="col-xs-12 col-sm-9">
+                        <h3><a th:href="'/profile/' + ${searchedUser.username}" th:text="${searchedUser.username}" style="margin-left: 15px; color: #FF6666; float: left;"></a></h3>
+                    </div>
+                    <div class="clearfix"></div>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
-
-<!-- JAVASCRIPT -->
-<script>
-    $(document).ready(function(){
-        $("#fade1").fadeIn(1000);
-        $("#fade2").fadeIn(2000);
-        $("#fade3").fadeIn(3000);
-    });
-</script>
 </body>
 </html>
+</DOCTYPE>
