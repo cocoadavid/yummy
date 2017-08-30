@@ -3,12 +3,13 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Yummy Recipe</title>
+    <title>Upload Image</title>
     <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+
 <body>
 <!-------NAVBAR------->
 <nav class="navbar navbar-default">
@@ -42,24 +43,17 @@
 </nav>
 <!-------END OF NAVBAR------->
 <div class="container-fluid">
-    <div class="row">
-        <h1 th:text="${recipe.name}" id="fade1" style="display: none; color: #FF6666; text-align: center; font-weight: bold;"></h1>
-        <div class="col-sm-6" id="fade2" style="display: none">
-            <img th:src="'/image/' + ${recipeId}" width="100%" th:alt="${username}"/>
-        </div>
-        <div class="cols-sm-6" id="fade3" style="display: none">
-            <p th:text="${recipe.description}" style="white-space: pre"></p>
-        </div>
-    </div>
+    <fieldset>
+        <legend style="color: #FF6666">Upload Image</legend>
+        <p>Please choose an image, click <strong>Upload</strong>, then we are ready!</p>
+        <form method="POST" action="uploadFile" enctype="multipart/form-data">
+            <input type="file" name="file"/>
+            <br />
+            <input type="text" name="name" th:value="${recipeId}" style="display: none"/>
+            <input type="submit" value="Upload" class="btn btn-success"/>
+        </form>
+    </fieldset>
 </div>
 
-<!-- JAVASCRIPT -->
-<script>
-    $(document).ready(function(){
-        $("#fade1").fadeIn(1000);
-        $("#fade2").fadeIn(2000);
-        $("#fade3").fadeIn(3000);
-    });
-</script>
 </body>
 </html>
