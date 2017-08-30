@@ -23,11 +23,14 @@ public class RecipeServiceImpl implements RecipeService {
         return recipeRepository.findRecipeByName(name);
     }
 
+    @Override
     public Recipe findRecipeById(Long id) {return recipeRepository.findRecipeById(id);}
 
     @Override
-    public void saveRecipe(Recipe recipe) {
+    public Recipe saveRecipe(Recipe recipe) {
         recipe.setDate(new Date());
         recipe.setYummy(0);
+        Recipe r = recipeRepository.save(recipe);
+        return r;
     }
 }

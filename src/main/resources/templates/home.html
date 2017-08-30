@@ -43,6 +43,11 @@
 	</nav>
 <!-------END OF NAVBAR------->
 	<div class="container-fluid">
+		<!-------SUCCESS MESSAGE -->
+		<div th:if="${success}" class="alert alert-success alert-dismissable" style="text-align: center">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong>You have successfully created a new recipe!</strong>
+		</div>
 		<!-------FEED------->
 		<div class="row" style="max-width: 1280px; margin-left: auto; margin-right: auto; display: table;">
 			<!--Iteration-->
@@ -54,7 +59,7 @@
 margin-bottom: 40px; margin-left: auto; margin-right: auto; display: table;">
 					<h3 th:text="${recipe.name}" style="color: white; font-weight: bold; margin-left: 10px; margin-top: 5px;"></h3>
 					<a th:href="'/recipe/' + ${recipe.id}">
-						<img th:src="@{/images/food/kaja1.jpg}" width="100%" alt="Yummy" />
+						<img th:src="'/image/' + ${recipe.id}" width="100%" alt="Yummy" />
 					</a>
 					<br/>
 					<h4 style="color: white;"><span class="glyphicon glyphicon-heart" style="color: white"></span> Yummy!  <span class="glyphicon glyphicon-comment" style="color: white"></span> Comment</h4>

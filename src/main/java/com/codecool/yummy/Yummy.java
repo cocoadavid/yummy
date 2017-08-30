@@ -12,17 +12,10 @@ import javax.annotation.Resource;
  */
 
 @SpringBootApplication
-public class Yummy implements CommandLineRunner {
+public class Yummy {
 
-    @Resource
-    StorageService storageService;
     public static void main(String[] args){
         SpringApplication.run(Yummy.class, args);
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-        storageService.deleteAll();
-        storageService.init();
-    }
 }
