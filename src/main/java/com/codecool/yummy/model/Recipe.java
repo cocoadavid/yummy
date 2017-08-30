@@ -30,6 +30,9 @@ public class Recipe {
     @OneToMany
     private List<Comment> comments = new ArrayList<Comment>();
 
+    @OneToMany
+    private List<User> yummies =new ArrayList<User>();
+
     private int yummy;
 
     @ManyToOne(cascade = {CascadeType.ALL})
@@ -96,7 +99,7 @@ public class Recipe {
     }
 
     public int getYummy() {
-        return yummy;
+        return yummies.size();
     }
 
     public void setYummy(int yummy) {
@@ -126,4 +129,6 @@ public class Recipe {
     public void removeComment(Comment comment) {
         comments.remove(comment);
     }
+
+    public List<User> getYummies(){return yummies;}
 }

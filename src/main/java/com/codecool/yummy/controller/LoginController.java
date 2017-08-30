@@ -6,6 +6,7 @@ import com.codecool.yummy.service.RecipeService;
 import com.codecool.yummy.service.StorageService;
 import com.codecool.yummy.service.UserService;
 
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
