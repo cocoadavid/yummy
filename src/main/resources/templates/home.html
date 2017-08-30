@@ -43,51 +43,29 @@
 	</nav>
 <!-------END OF NAVBAR------->
 	<div class="container-fluid">
-		<!-------FEED------->
-		<!-------currently with 2 example recipes------->
-		<div class="row" style="max-width: 1280px; margin-left: auto; margin-right: auto; display: table;">
-			<!--Recipe1-->
-			<div class="col-md-6">
-				<div style="width: 400px; margin-left: auto; margin-right: auto; display: table;">
-					<h4 style="margin-left: 15px; color: #FF6666; float: left;">MaciLaci</h4>
-				</div>
-				<div style="background-color: #FF6666; height: 500px; width: 400px; border-radius: 5px;
-margin-bottom: 40px; margin-left: auto; margin-right: auto; display: table;">
-					<h3 style="color: white; font-weight: bold; margin-left: 10px; margin-top: 5px;">Best Recept Evör</h3>
-					<img th:src="@{/images/food/kaja1.jpg}" width="100%" alt="Yummy" />
-				</div>
-			</div>
-			<!--Recipe2-->
-			<div class="col-md-6">
-				<div style="width: 400px; margin-left: auto; margin-right: auto; display: table;">
-					<h4 style="margin-left: 15px; color: #FF6666; float: left;">Sanyi Amacska</h4>
-				</div>
-				<div style="background-color: #FF6666; height: 500px; width: 400px; border-radius: 5px;
-margin-bottom: 40px; margin-left: auto; margin-right: auto; display: table;">
-					<h3 style="color: white; font-weight: bold; margin-left: 10px; margin-top: 5px;">Henger with yellow stuff</h3>
-					<img th:src="@{/images/food/kaja2.jpg}" width="100%" alt="Yummy" />
-				</div>
-			</div>
-
+		<!-------SUCCESS MESSAGE -->
+		<div th:if="${success}" class="alert alert-success alert-dismissable" style="text-align: center">
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			<strong>You have successfully created a new recipe!</strong>
 		</div>
-
-		<!--<form th:action="@{/logout}" method="get">-->
-			<!--<button class="btn btn-md btn-danger btn-block" name="registration"-->
-				<!--type="Submit">Logout</button>-->
-		<!--</form>-->
-		
-		<!--<div class="panel-group" style="margin-top:40px">-->
-			<!--<div class="panel panel-primary">-->
-				<!--<div class="panel-heading">-->
-					<!--<span th:utext="${userName}"></span>-->
-				<!--</div>-->
-				<!--<div class="panel-body">-->
-					<!--<img th:src="@{/images/beer.jpg}" class="img-responsive center-block" width="400" height="400" alt="Beer" /> -->
-				<!--</div>-->
-				<!--<p class="admin-message-text text-center" th:utext="${userMessage}"></p>-->
-			<!--</div>-->
-		<!--</div>-->
-		
+		<!-------FEED------->
+		<div class="row" style="max-width: 1280px; margin-left: auto; margin-right: auto; display: table;">
+			<!--Iteration-->
+			<div class="col-md-6" th:each="recipe, iterStat : ${recipes}">
+				<div style="width: 400px; margin-left: auto; margin-right: auto; display: table;">
+					<h4 th:text="${recipe.user.username}" style="margin-left: 15px; color: #FF6666; float: left;"></h4>
+				</div>
+				<div style="background-color: #FF6666; height: 500px; width: 400px; border-radius: 5px;
+margin-bottom: 40px; margin-left: auto; margin-right: auto; display: table;">
+					<h3 th:text="${recipe.name}" style="color: white; font-weight: bold; margin-left: 10px; margin-top: 5px;"></h3>
+					<a th:href="'/recipe/' + ${recipe.id}">
+						<img th:src="'/image/' + ${recipe.id}" width="100%" alt="Yummy" />
+					</a>
+					<br/>
+					<h4 style="color: white;"><span class="glyphicon glyphicon-heart" style="color: white"></span> Yummy!  <span class="glyphicon glyphicon-comment" style="color: white"></span> Comment</h4>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

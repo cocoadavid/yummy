@@ -4,12 +4,13 @@ import com.codecool.yummy.model.Recipe;
 import com.codecool.yummy.model.User;
 import com.codecool.yummy.service.RecipeService;
 import com.codecool.yummy.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -75,7 +76,7 @@ public class LoginController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         modelAndView.addObject("username", user.getUsername());
-        modelAndView.addObject("userMessage","Content Available Only for Users");
+        modelAndView.addObject("recipes", user.getFollowedRecipes());
         modelAndView.setViewName("home");
         return modelAndView;
     }
@@ -103,15 +104,32 @@ public class LoginController {
             modelAndView.setViewName("recipe_form");
         } else {
             recipe.setUser(user);
-            recipeService.saveRecipe(recipe);
+            Recipe returnedRecipe = recipeService.saveRecipe(recipe);
+            Long recipeId = returnedRecipe.getId();
+            System.out.println(recipeId);
             user.addRecipe(recipe);
             userService.updateUser(user);
             modelAndView.addObject("success", 1);
             modelAndView.addObject("legend", "New Recipe");
             modelAndView.addObject("username", user.getUsername());
-            modelAndView.addObject("button", "Create Recipe");
-            modelAndView.setViewName("recipe_form");
+            modelAndView.addObject("button", "Upload");
+            modelAndView.addObject("recipeId", recipeId + ".jpg");
+            modelAndView.setViewName("uploadImage");
         }
         return modelAndView;
     }
+
+    @RequestMapping(value = "/recipe/{id}", method = RequestMethod.GET)
+    public ModelAndView showRecipe(@PathVariable long id){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        Recipe recipe = recipeService.findRecipeById(id);
+        modelAndView.addObject("username", user.getUsername());
+        modelAndView.addObject("recipe", recipe);
+        modelAndView.addObject("recipeId", id);
+        modelAndView.setViewName("recipe");
+        return modelAndView;
+    }
+
 }
