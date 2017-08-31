@@ -33,4 +33,10 @@ public class RecipeServiceImpl implements RecipeService {
         Recipe r = recipeRepository.save(recipe);
         return r;
     }
+
+    @Override
+    public Recipe updateRecipe(Recipe recipe) {
+        Recipe r = recipeRepository.save(recipe);
+        return r;
+    }
 }
