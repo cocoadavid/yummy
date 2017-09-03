@@ -74,17 +74,15 @@ margin-bottom: 40px; margin-left: auto; margin-right: auto; display: table;">
 		$('button.yummy').click(function (event) {
 		    var button = $(event.currentTarget);
 		    var recipe_id = button.attr('id');
-			alert(recipe_id);
 			$.ajax({
 				url:'/yummy/' + recipe_id,
 				method: 'POST',
 				error: function () {
-					alert('error madafaka')
+					alert('error');
                 },
 				success: function (data) {
 					var info = JSON.parse(data);
 					var yummy = info['yummy'];
-					alert(yummy);
 					$('button#yummy' + recipe_id).text(yummy);
                 }
 

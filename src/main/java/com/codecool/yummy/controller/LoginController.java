@@ -137,8 +137,11 @@ public class LoginController {
     @RequestMapping(value = "/yummy/{id}", method = RequestMethod.POST)
     @ResponseBody
     public String yummy(@PathVariable(value = "id") Long id){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
         Recipe recipe = recipeService.findRecipeById(id);
-        recipe.setYummy(recipe.getYummy() + 1);
+        recipe.addYummer(user);
+//        recipe.setYummy(recipe.getYummy() + 1);
         Recipe updatedRecipe = recipeService.updateRecipe(recipe);
         int yummies = updatedRecipe.getYummy();
         JsonObject response = Json.createObjectBuilder()
