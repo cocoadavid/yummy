@@ -141,7 +141,6 @@ public class LoginController {
         User user = userService.findUserByEmail(auth.getName());
         Recipe recipe = recipeService.findRecipeById(id);
         recipe.addYummer(user);
-//        recipe.setYummy(recipe.getYummy() + 1);
         Recipe updatedRecipe = recipeService.updateRecipe(recipe);
         int yummies = updatedRecipe.getYummy();
         JsonObject response = Json.createObjectBuilder()
