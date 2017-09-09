@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Yummy Recipe</title>
+    <title>Yummy Profile</title>
     <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -42,24 +42,34 @@
 </nav>
 <!-------END OF NAVBAR------->
 <div class="container-fluid">
-    <div class="row">
-        <h2 th:text="${recipe.name}" id="fade1" style="display: none"></h2>
-        <div class="col-sm-6" id="fade2" style="display: none">
-            <img th:src="@{/images/food/kaja1.jpg}" width="100%"/>
+    <!-------PROFILE DETAILS------->
+    <div class="row justify-content-center" style="max-width: 1280px; margin-left: auto; margin-right: auto; display: table;">
+        <div class="col-sm-4" style="display: inline-block">
+            <img th:src="@{/images/profile/default_profile_picture.png}" style="max-width: 150px; margin-right: 50px; margin-bottom: 50px; margin-top: 30px" class="img-circle img-fluid">
         </div>
-        <div class="cols-sm-6" id="fade3" style="display: none">
-            <p th:text="${recipe.description}" style="white-space: pre"></p>
+        <div class="col-sm-8" style="margin-top: 8px; display: inline-block;">
+            <h1 th:text="${otherUsername}" style="font-weight: bold;"></h1><button type="button" style="color: white;" class="btn btn-sm btn-primary">Follow</button>
+            <h5><span class="badge" th:text="${numberOfRecipes}"></span><th:text style="margin-right: 4px"> recipes </th:text><span class="badge" th:text="${numberOfFollowers}"></span><th:text style="margin-right: 4px"> followers </th:text><span class="badge" th:text="${numberOfFollowing}"></span><th:text style="margin-right: 4px"> following </th:text></h5>
+        </div>
+    </div>
+    <!-------RECIPES------->
+    <div class="row" style="max-width: 1280px; margin-left: auto; margin-right: auto; display: table;">
+        <div th:if="${recipes.empty}">
+            <h1>No Recipes Yet</h1>
+        </div>
+        <!--Iteration-->
+        <div class="col-md-6" th:each="recipe, iterStat : ${recipes}">
+            <div style="background-color: #FF6666; height: 500px; width: 400px; border-radius: 5px;
+margin-bottom: 40px; margin-left: auto; margin-right: auto; display: table;">
+                <h3 th:text="${recipe.name}" style="color: white; font-weight: bold; margin-left: 10px; margin-top: 5px;"></h3>
+                <a th:href="'/recipe/' + ${recipe.id}">
+                    <img th:src="@{/images/food/kaja1.jpg}" width="100%" alt="Yummy" />
+                </a>
+                <br/>
+                <h4 style="color: white;"><span class="glyphicon glyphicon-heart" style="color: white"></span> Yummy!  <span class="glyphicon glyphicon-comment" style="color: white"></span> Comment</h4>
+            </div>
         </div>
     </div>
 </div>
-
-<!-- JAVASCRIPT -->
-<script>
-    $(document).ready(function(){
-        $("#fade1").fadeIn(1000);
-        $("#fade2").fadeIn(2000);
-        $("#fade3").fadeIn(3000);
-    });
-</script>
 </body>
 </html>

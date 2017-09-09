@@ -11,6 +11,23 @@
 </head>
 
 <body>
+<script th:inline="javascript">
+    $(document).ready(function() {
+        $("#searchButton").on("click", function (ev) {
+            $.ajax({
+                url: "/search",
+                type: "post",
+                data: {"searchTerm": $("#searchTerm").val()},
+                success: function(data) {
+                    alert(JSON.stringify(data));
+                },
+                error: function () {
+                    console.log("There was an error");
+                }
+            });
+        });
+    });
+</script>
 	<!-------NAVBAR------->
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
@@ -26,14 +43,14 @@
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li class="hover-bold"><a th:href="'/profile/' + ${username}" class="hover-bold" th:text="${username}"></a></li>
+					<li class="hover-bold"><a th:href="'/myprofile/' + ${username}" class="hover-bold" th:text="${username}"></a></li>
 					<li class="hover-bold"><a href="/new_recipe" class="hover-bold">New Recipe</a></li>
 				</ul>
-				<form class="navbar-form navbar-left" action="/search" method="POST">
+				<form class="navbar-form navbar-left">
 					<div class="form-group">
-						<input type="text" name="searchTerm" class="form-control" placeholder="Search Users">
+						<input type="text" name="searchTerm" id="searchTerm" class="form-control" placeholder="Search Users">
 					</div>
-					<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+					<button type="submit" class="btn btn-primary" id="searchButton"><span class="glyphicon glyphicon-search"></span></button>
 				</form>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="hover-bold"><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>

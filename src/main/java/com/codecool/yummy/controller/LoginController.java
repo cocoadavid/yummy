@@ -6,6 +6,9 @@ import com.codecool.yummy.service.RecipeService;
 import com.codecool.yummy.service.StorageService;
 import com.codecool.yummy.service.UserService;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -94,15 +97,31 @@ public class LoginController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/search", method = RequestMethod.POST)
-    public ModelAndView search(@RequestParam("searchTerm") String searchTerm) {
+    @RequestMapping(value="/search", produces="application/json")
+    @ResponseBody
+    public String search(@RequestParam("searchTerm") String searchTerm) throws JSONException {
+        List<User> searchedUsers = userService.findByUsernameContaining(searchTerm);
+        JSONObject jObject = new JSONObject();
+        List<String> users = new ArrayList<String>();
+        for (User searchedUser : searchedUsers) {
+            users.add(searchedUser.getUsername());
+        }
+        jObject.put("searchedUsers", users);
+        System.out.println(String.valueOf(jObject));
+        return String.valueOf(jObject);
+    }
+
+    @RequestMapping(value="/myprofile/{username}", method = RequestMethod.GET)
+    public ModelAndView profile() {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        List<User> searchedUsers = userService.findByUsernameContaining(searchTerm);
         modelAndView.addObject("username", user.getUsername());
-        modelAndView.addObject("searchedUsers", searchedUsers);
-        modelAndView.setViewName("search_list");
+        modelAndView.addObject("recipes", user.getRecipes());
+        modelAndView.addObject("numberOfRecipes", user.getNumberOfRecipes(user.getRecipes()));
+        modelAndView.addObject("numberOfFollowers", user.getNumberOfFollowers(user.getFollowers()));
+        modelAndView.addObject("numberOfFollowing", user.getNumberOfFollowing(user.getFollowing()));
+        modelAndView.setViewName("my_profile");
         return modelAndView;
     }
 
@@ -112,24 +131,16 @@ public class LoginController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         User otherUser = userService.findUserByUsername(username);
-        if (username == user.getUsername()) {
-            modelAndView.addObject("username", user.getUsername());
-            modelAndView.addObject("otherUsername", user.getUsername());
-            modelAndView.addObject("recipes", user.getRecipes());
-            modelAndView.addObject("numberOfRecipes", user.getNumberOfRecipes(user.getRecipes()));
-            modelAndView.addObject("numberOfFollowers", user.getNumberOfFollowers(user.getFollowers()));
-            modelAndView.addObject("numberOfFollowing", user.getNumberOfFollowing(user.getFollowing()));
-        } else {
-            modelAndView.addObject("username", user.getUsername());
-            modelAndView.addObject("otherUsername", otherUser.getUsername());
-            modelAndView.addObject("recipes", otherUser.getRecipes());
-            modelAndView.addObject("numberOfRecipes", otherUser.getNumberOfRecipes(otherUser.getRecipes()));
-            modelAndView.addObject("numberOfFollowers", otherUser.getNumberOfFollowers(otherUser.getFollowers()));
-            modelAndView.addObject("numberOfFollowing", otherUser.getNumberOfFollowing(otherUser.getFollowing()));
-        }
-        modelAndView.setViewName("profile");
+        modelAndView.addObject("username", user.getUsername());
+        modelAndView.addObject("otherUsername", otherUser.getUsername());
+        modelAndView.addObject("recipes", otherUser.getRecipes());
+        modelAndView.addObject("numberOfRecipes", otherUser.getNumberOfRecipes(otherUser.getRecipes()));
+        modelAndView.addObject("numberOfFollowers", otherUser.getNumberOfFollowers(otherUser.getFollowers()));
+        modelAndView.addObject("numberOfFollowing", otherUser.getNumberOfFollowing(otherUser.getFollowing()));
+        modelAndView.setViewName("user_profile");
         return modelAndView;
     }
+
 
     @RequestMapping(value = "/new_recipe", method = RequestMethod.GET)
     public ModelAndView newRecipe() {
