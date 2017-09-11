@@ -32,6 +32,9 @@ public class Recipe {
 
     private int yummy;
 
+    @ManyToMany
+    private List<User> yummers = new ArrayList<>();
+
     @ManyToOne(cascade = {CascadeType.ALL})
     private User user;
 
@@ -125,5 +128,18 @@ public class Recipe {
 
     public void removeComment(Comment comment) {
         comments.remove(comment);
+    }
+
+    public void addYummer(User user){
+        if(yummers.contains(user)){
+            yummers.remove(user);
+            yummy--;
+        }
+        else {
+            yummers.add(user);
+            yummy++;
+        }
+
+
     }
 }
