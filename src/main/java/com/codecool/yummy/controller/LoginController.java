@@ -23,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -97,18 +99,20 @@ public class LoginController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/search", method = RequestMethod.POST)
+    @RequestMapping(value="/search/{searchTerm}", method = RequestMethod.GET)
     @ResponseBody
-    public String search(@RequestParam("searchTerm") String searchTerm) throws JSONException {
+    public String search(@PathVariable String searchTerm) throws JSONException {
+        System.out.println(searchTerm);
+        System.out.println("boom shaka laka");
         List<User> searchedUsers = userService.findByUsernameContaining(searchTerm);
-        JSONObject jObject = new JSONObject();
         List<String> users = new ArrayList<String>();
         for (User searchedUser : searchedUsers) {
             users.add(searchedUser.getUsername());
         }
-        jObject.put("searchedUsers", users);
-        System.out.println(String.valueOf(jObject));
-        return String.valueOf(jObject);
+        JsonObject response = Json.createObjectBuilder()
+                .add("searchedUsers", users.toString())
+                .build();
+        return response.toString();
     }
 
     @RequestMapping(value="/myprofile/{username}", method = RequestMethod.GET)
