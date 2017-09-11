@@ -11,23 +11,27 @@
 </head>
 
 <body>
-<script th:inline="javascript">
+
+<script>
     $(document).ready(function() {
         $("#searchButton").on("click", function (ev) {
+            var button = $(event.currentTarget);
             $.ajax({
                 url: "/search",
-                type: "post",
+                type: "POST",
                 data: {"searchTerm": $("#searchTerm").val()},
                 success: function(data) {
-                    alert(JSON.stringify(data));
+                    var info = JSON.stringify(data).parse(data);
+                    var searched = info['searchedUsers'];
                 },
                 error: function () {
-                    console.log("There was an error");
+                    alert('Error');
                 }
             });
         });
     });
 </script>
+
 	<!-------NAVBAR------->
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">

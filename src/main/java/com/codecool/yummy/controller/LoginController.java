@@ -97,7 +97,7 @@ public class LoginController {
         return modelAndView;
     }
 
-    @RequestMapping(value="/search", produces="application/json")
+    @RequestMapping(value="/search", method = RequestMethod.POST)
     @ResponseBody
     public String search(@RequestParam("searchTerm") String searchTerm) throws JSONException {
         List<User> searchedUsers = userService.findByUsernameContaining(searchTerm);
