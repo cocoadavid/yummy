@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.validation.Valid;
 
 /**
@@ -130,6 +132,21 @@ public class LoginController {
         modelAndView.addObject("recipeId", id);
         modelAndView.setViewName("recipe");
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/yummy/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public String yummy(@PathVariable(value = "id") Long id){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        Recipe recipe = recipeService.findRecipeById(id);
+        recipe.addYummer(user);
+        Recipe updatedRecipe = recipeService.updateRecipe(recipe);
+        int yummies = updatedRecipe.getYummy();
+        JsonObject response = Json.createObjectBuilder()
+                .add("yummy", yummies)
+                .build();
+        return response.toString();
     }
 
 }

@@ -10,4 +10,5 @@ public interface RecipeService {
     public Recipe findRecipeByName(String name);
     public Recipe findRecipeById(Long id);
     public Recipe saveRecipe(Recipe recipe);
+    public Recipe updateRecipe(Recipe recipe);
 }
