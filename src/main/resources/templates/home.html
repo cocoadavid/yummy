@@ -68,7 +68,9 @@ margin-bottom: 40px; margin-left: auto; margin-right: auto; display: table;">
 	<script>
         $(document).ready(function() {
             $("#searchButton").click(function (event) {
+                event.preventDefault();
                 var searchTerm = $('#searchTerm').val();
+                $(".row").remove();
                 $.ajax({
                     url: "/search/" + searchTerm,
                     method: 'GET',
@@ -76,7 +78,9 @@ margin-bottom: 40px; margin-left: auto; margin-right: auto; display: table;">
                     success: function(data) {
                         var info = JSON.parse(data);
                         var searchedUserList = info['searchedUsers'];
-                        alert(searchedUserList);
+                        var users = JSON.parse(searchedUserList);
+                        alert(typeof(users));
+
                     },
                     error: function (err) {
                         alert('Error:' + err[0]);

@@ -109,8 +109,9 @@ public class LoginController {
         for (User searchedUser : searchedUsers) {
             users.add(searchedUser.getUsername());
         }
+        JSONArray array = new JSONArray(users);
         JsonObject response = Json.createObjectBuilder()
-                .add("searchedUsers", users.toString())
+                .add("searchedUsers", array.toString())
                 .build();
         return response.toString();
     }
