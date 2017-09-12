@@ -67,11 +67,12 @@ margin-bottom: 40px; margin-left: auto; margin-right: auto; display: table;">
 	</div>
 	<script>
         $(document).ready(function() {
-            $("#searchButton").on("click", function (event) {
+            $("#searchButton").click(function (event) {
                 var searchTerm = $('#searchTerm').val();
                 $.ajax({
                     url: "/search/" + searchTerm,
                     method: 'GET',
+                    async: false,
                     success: function(data) {
                         var info = JSON.parse(data);
                         var searchedUserList = info['searchedUsers'];
