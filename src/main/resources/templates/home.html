@@ -45,7 +45,7 @@
 		</div>
 	</nav>
 <!-------END OF NAVBAR------->
-	<div class="container-fluid">
+	<div class="container-fluid" id="content">
 		<!-------FEED------->
 		<div class="row" style="max-width: 1280px; margin-left: auto; margin-right: auto; display: table;">
 			<!--Iteration-->
@@ -79,7 +79,11 @@ margin-bottom: 40px; margin-left: auto; margin-right: auto; display: table;">
                         var info = JSON.parse(data);
                         var searchedUserList = info['searchedUsers'];
                         var users = JSON.parse(searchedUserList);
-                        alert(typeof(users));
+                        alert(users);
+                        for( var i = 0; i < users.length; i++){
+                            alert(users[i]);
+                            $("#content").append("<a href='/profile/" + users[i] + "'>" + users[i] + "</a>");
+						}
 
                     },
                     error: function (err) {
