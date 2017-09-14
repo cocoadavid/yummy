@@ -9,5 +9,6 @@ public interface RecipeService {
 
     public Recipe findRecipeByName(String name);
     public Recipe findRecipeById(Long id);
-    public void saveRecipe(Recipe recipe);
+    public Recipe saveRecipe(Recipe recipe);
+    public Recipe updateRecipe(Recipe recipe);
 }
