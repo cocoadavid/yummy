@@ -48,7 +48,7 @@
             <img th:src="'/image/' + ${recipeId}" width="100%" th:alt="${username}"/>
         </div>
         <div class="cols-sm-6" id="fade3" style="display: none">
-            <p th:text="${recipe.description}" style="white-space: pre"></p>
+            <p th:text="${recipe.description}" style="white-space: pre-wrap"></p>
         </div>
     </div>
 </div>
