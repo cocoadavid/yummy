@@ -91,8 +91,6 @@ public class LoginController {
     @RequestMapping(value="/search/{searchTerm}", method = RequestMethod.GET)
     @ResponseBody
     public String search(@PathVariable String searchTerm) throws JSONException {
-        System.out.println(searchTerm);
-        System.out.println("boom shaka laka");
         List<User> searchedUsers = userService.findByUsernameContaining(searchTerm);
         List<String> users = new ArrayList<String>();
         for (User searchedUser : searchedUsers) {

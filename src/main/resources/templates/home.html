@@ -104,12 +104,20 @@ margin-bottom: 40px; margin-left: auto; margin-right: auto; display: table; box-
                         var info = JSON.parse(data);
                         var searchedUserList = info['searchedUsers'];
                         var users = JSON.parse(searchedUserList);
-                        alert(users);
-                        for( var i = 0; i < users.length; i++){
-                            alert(users[i]);
-                            $("#content").append("<a href='/profile/" + users[i] + "'>" + users[i] + "</a>");
-						}
-
+                        for( var i = 0; i < users.length; i++) {
+                            $("#content").append(
+                                "<div class='col-md-6'>" +
+                                "<ul class='list-group'>" +
+                                "<li class='list-group-item'>" +
+                                "<div class='col-xs-12 col-sm-3'>" +
+                                "<a href='/profile/" + users[i] + "'>" +
+                                "<img src='/images/profile/default_profile_picture.png' width='100%' alt='Yummy' />" +
+                                "</a></div>" +
+                                "<div class='col-xs-12 col-sm-9'>" +
+                                "<a href='/profile/" + users[i] + "' style='margin-left: 15px; margin-top: 30px; color: #FF6666; float: left; font-size: x-large;'>" + users[i] + "</a>" +
+                                "</div><div class='clearfix'></div></li></ul></div>"
+                            );
+                        }
                     },
                     error: function (err) {
                         alert('Error:' + err[0]);
