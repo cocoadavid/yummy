@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Yummy Profile</title>
+    <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<!-------NAVBAR------->
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a id="img-home" class="navbar-brand" href="/home"><img th:src="@{/images/logo/yummy_white.png}" height="150%" alt="Yummy" /></a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li <li class="hover-bold"><a th:href="'/profile/' + ${username}" class="hover-bold" th:text="${username}"></a></li>
+                <li class="hover-bold"><a href="/new_recipe" class="hover-bold">New Recipe</a></li>
+            </ul>
+            <form class="navbar-form navbar-left" action="/search" method="POST">
+                <div class="form-group">
+                    <input type="text" name="searchTerm" class="form-control" placeholder="Search Users">
+                </div>
+                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="hover-bold"><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-------END OF NAVBAR------->
+<div class="container-fluid">
+    <!-------PROFILE DETAILS------->
+    <div class="row justify-content-center" style="max-width: 1280px; margin-left: auto; margin-right: auto; display: table;">
+        <div class="col-sm-4" style="display: inline-block">
+            <img th:src="@{/images/profile/default_profile_picture.png}" style="max-width: 150px; margin-right: 50px; margin-bottom: 50px; margin-top: 30px" class="img-circle img-fluid">
+        </div>
+        <div class="col-sm-8" style="margin-top: 8px; display: inline-block;">
+            <h1 th:text="${username}" style="font-weight: bold;"></h1><button type="button" style="color: white;" class="btn btn-sm btn-primary">Edit Profile</button>
+            <h5><span class="badge" th:text="${numberOfRecipes}"></span><th:text style="margin-right: 4px"> recipes </th:text><span class="badge" th:text="${numberOfFollowers}"></span><th:text style="margin-right: 4px"> followers </th:text><span class="badge" th:text="${numberOfFollowing}"></span><th:text style="margin-right: 4px"> following </th:text></h5>
+        </div>
+    </div>
+    <!-------RECIPES------->
+    <div class="row" style="max-width: 1280px; margin-left: auto; margin-right: auto; display: table;">
+        <div th:if="${recipes.empty}">
+            <h1>No Recipes Yet</h1>
+        </div>
+        <!--Iteration-->
+        <div class="col-md-6" th:each="recipe, iterStat : ${recipes}">
+            <div style="background-color: #FF6666; height: 500px; width: 400px; border-radius: 5px;
+margin-bottom: 40px; margin-left: auto; margin-right: auto; display: table;">
+                <h3 th:text="${recipe.name}" style="color: white; font-weight: bold; margin-left: 10px; margin-top: 5px;"></h3>
+                <a th:href="'/recipe/' + ${recipe.id}">
+                    <img th:src="@{/images/food/kaja1.jpg}" width="100%" alt="Yummy" />
+                </a>
+                <br/>
+                <h4 style="color: white;"><span class="glyphicon glyphicon-heart" style="color: white"></span> Yummy!  <span class="glyphicon glyphicon-comment" style="color: white"></span> Comment</h4>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

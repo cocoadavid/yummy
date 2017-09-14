@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * Created by szilarddavid on 2017.07.11..
@@ -38,6 +39,9 @@ public class UserServiceImpl implements UserService {
     public User findUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
+    @Override
+    public List<User> findByUsernameContaining(String username) { return userRepository.findByUsernameContaining(username); }
 
     @Override
     public void saveUser(User user) {
