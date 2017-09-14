@@ -24,6 +24,8 @@ public class Recipe {
 
     private Date date;
 
+//    private String freeingredients;//mentes ételek pl cukor,laktóz,glutén...stb
+
     @OneToMany
     private List<Picture> pictures = new ArrayList<Picture>();
 
