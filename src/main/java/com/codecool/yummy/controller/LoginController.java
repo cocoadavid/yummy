@@ -200,4 +200,19 @@ public class LoginController {
         return response.toString();
     }
 
+    @RequestMapping(value = "/follow/{username}", method = RequestMethod.POST)
+    @ResponseBody
+    public String follow(@PathVariable(value = "username") String username){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        User followedUser = userService.findUserByUsername(username);
+        user.addFollowing(followedUser);
+        System.out.println(user.getFollowing());
+        userService.updateUser(user);
+        JsonObject response = Json.createObjectBuilder()
+                .add("username", username)
+                .build();
+        return response.toString();
+    }
+
 }

@@ -48,7 +48,7 @@
             <img th:src="@{/images/profile/default_profile_picture.png}" style="max-width: 150px; margin-right: 50px; margin-bottom: 50px; margin-top: 30px" class="img-circle img-fluid">
         </div>
         <div class="col-sm-8" style="margin-top: 8px; display: inline-block;">
-            <h1 th:text="${otherUsername}" style="font-weight: bold;"></h1><button type="button" style="color: white;" class="btn btn-sm btn-primary">Follow</button>
+            <h1 th:text="${otherUsername}" style="font-weight: bold;"></h1><button type="button" th:id="follow" th:attr="data-username=${otherUsername}" style="color: white;" class="btn btn-sm btn-primary">Follow</button>
             <h5><span class="badge" th:text="${numberOfRecipes}"></span><th:text style="margin-right: 4px"> recipes </th:text><span class="badge" th:text="${numberOfFollowers}"></span><th:text style="margin-right: 4px"> followers </th:text><span class="badge" th:text="${numberOfFollowing}"></span><th:text style="margin-right: 4px"> following </th:text></h5>
         </div>
     </div>
@@ -71,5 +71,6 @@ margin-bottom: 40px; margin-left: auto; margin-right: auto; display: table;">
         </div>
     </div>
 </div>
+<script src="/js/custom.js"></script>
 </body>
 </html>

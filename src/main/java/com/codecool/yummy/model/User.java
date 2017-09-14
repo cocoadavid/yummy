@@ -168,7 +168,11 @@ public class User {
 
     public void removeFollower(User user) { followers.remove(user); }
 
-    public void addFollowing(User user) { following.add(user); }
+    public void addFollowing(User user) {
+        if (this.getUsername().equals(user.getUsername()) == false && this.following.contains(user) == false ){
+            following.add(user);
+        }
+    }
 
     public void removeFollowing(User user) { following.remove(user); }
 
