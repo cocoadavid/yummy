@@ -40,6 +40,9 @@ public class User {
     @NotEmpty(message = "*Please provide your last name.")
     private String lastName;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "active")
     private int active;
 
@@ -109,6 +112,10 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) { this.description = description; }
+
     public int getActive() {
         return active;
     }
@@ -161,11 +168,15 @@ public class User {
 
     public void removeFollower(User user) { followers.remove(user); }
 
-    public void addFollowing(User user) { following.add(user); }
+    public void addFollowing(User user) {
+        if (this.getUsername().equals(user.getUsername()) == false && this.following.contains(user) == false ){
+            following.add(user);
+        }
+    }
 
     public void removeFollowing(User user) { following.remove(user); }
 
-    public List<Recipe> followedRecipes() {
+    public List<Recipe> getFollowedRecipes() {
         List<Recipe> recipes = new ArrayList<Recipe>();
 
         for (Recipe recipe : this.getRecipes()) {
@@ -188,5 +199,10 @@ public class User {
         return recipes;
     }
 
+    public int getNumberOfRecipes(List<Recipe> recipes) { return recipes.size(); }
+
+    public int getNumberOfFollowers(List<User> followers) { return followers.size(); }
+
+    public int getNumberOfFollowing(List<User> following) { return following.size(); }
 
 }

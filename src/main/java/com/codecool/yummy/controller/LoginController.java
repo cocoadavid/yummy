@@ -4,16 +4,24 @@ import com.codecool.yummy.model.Recipe;
 import com.codecool.yummy.model.User;
 import com.codecool.yummy.service.RecipeService;
 import com.codecool.yummy.service.UserService;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by szilarddavid on 2017.07.11..
@@ -75,10 +83,56 @@ public class LoginController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         modelAndView.addObject("username", user.getUsername());
-        modelAndView.addObject("userMessage","Content Available Only for Users");
+        modelAndView.addObject("recipes", user.getFollowedRecipes());
         modelAndView.setViewName("home");
         return modelAndView;
     }
+
+    @RequestMapping(value="/search/{searchTerm}", method = RequestMethod.GET)
+    @ResponseBody
+    public String search(@PathVariable String searchTerm) throws JSONException {
+        List<User> searchedUsers = userService.findByUsernameContaining(searchTerm);
+        List<String> users = new ArrayList<String>();
+        for (User searchedUser : searchedUsers) {
+            users.add(searchedUser.getUsername());
+        }
+        JSONArray array = new JSONArray(users);
+        JsonObject response = Json.createObjectBuilder()
+                .add("searchedUsers", array.toString())
+                .build();
+        return response.toString();
+    }
+
+    @RequestMapping(value="/myprofile/{username}", method = RequestMethod.GET)
+    public ModelAndView profile() {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        modelAndView.addObject("username", user.getUsername());
+        modelAndView.addObject("recipes", user.getRecipes());
+        modelAndView.addObject("numberOfRecipes", user.getNumberOfRecipes(user.getRecipes()));
+        modelAndView.addObject("numberOfFollowers", user.getNumberOfFollowers(user.getFollowers()));
+        modelAndView.addObject("numberOfFollowing", user.getNumberOfFollowing(user.getFollowing()));
+        modelAndView.setViewName("my_profile");
+        return modelAndView;
+    }
+
+    @RequestMapping(value="/profile/{username}", method = RequestMethod.GET)
+    public ModelAndView profile(@PathVariable("username") String username) {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        User otherUser = userService.findUserByUsername(username);
+        modelAndView.addObject("username", user.getUsername());
+        modelAndView.addObject("otherUsername", otherUser.getUsername());
+        modelAndView.addObject("recipes", otherUser.getRecipes());
+        modelAndView.addObject("numberOfRecipes", otherUser.getNumberOfRecipes(otherUser.getRecipes()));
+        modelAndView.addObject("numberOfFollowers", otherUser.getNumberOfFollowers(otherUser.getFollowers()));
+        modelAndView.addObject("numberOfFollowing", otherUser.getNumberOfFollowing(otherUser.getFollowing()));
+        modelAndView.setViewName("user_profile");
+        return modelAndView;
+    }
+
 
     @RequestMapping(value = "/new_recipe", method = RequestMethod.GET)
     public ModelAndView newRecipe() {
@@ -103,15 +157,62 @@ public class LoginController {
             modelAndView.setViewName("recipe_form");
         } else {
             recipe.setUser(user);
-            recipeService.saveRecipe(recipe);
+            Recipe returnedRecipe = recipeService.saveRecipe(recipe);
+            Long recipeId = returnedRecipe.getId();
+            System.out.println(recipeId);
             user.addRecipe(recipe);
             userService.updateUser(user);
             modelAndView.addObject("success", 1);
             modelAndView.addObject("legend", "New Recipe");
             modelAndView.addObject("username", user.getUsername());
-            modelAndView.addObject("button", "Create Recipe");
-            modelAndView.setViewName("recipe_form");
+            modelAndView.addObject("button", "Upload");
+            modelAndView.addObject("recipeId", recipeId + ".jpg");
+            modelAndView.setViewName("uploadImage");
         }
         return modelAndView;
     }
+
+    @RequestMapping(value = "/recipe/{id}", method = RequestMethod.GET)
+    public ModelAndView showRecipe(@PathVariable long id){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        Recipe recipe = recipeService.findRecipeById(id);
+        modelAndView.addObject("username", user.getUsername());
+        modelAndView.addObject("recipe", recipe);
+        modelAndView.addObject("recipeId", id);
+        modelAndView.setViewName("recipe");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/yummy/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public String yummy(@PathVariable(value = "id") Long id){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        Recipe recipe = recipeService.findRecipeById(id);
+        recipe.addYummer(user);
+        Recipe updatedRecipe = recipeService.updateRecipe(recipe);
+        int yummies = updatedRecipe.getYummy();
+        JsonObject response = Json.createObjectBuilder()
+                .add("yummy", yummies)
+                .build();
+        return response.toString();
+    }
+
+    @RequestMapping(value = "/follow/{username}", method = RequestMethod.POST)
+    @ResponseBody
+    public String follow(@PathVariable(value = "username") String username){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        User followedUser = userService.findUserByUsername(username);
+        user.addFollowing(followedUser);
+        System.out.println(user.getFollowing());
+        userService.updateUser(user);
+        JsonObject response = Json.createObjectBuilder()
+                .add("username", username)
+                .build();
+        return response.toString();
+    }
+
 }
