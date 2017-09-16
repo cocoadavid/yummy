@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+<DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <title>Yummy</title>
     <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/recipe_form.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
     <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
@@ -26,8 +26,8 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li <li class="hover-bold"><a th:href="'/myprofile/' + ${username}" class="hover-bold" th:text="${username}"></a></li>
-                <li class="hover-bold"><a href="#" class="hover-bold">New Recipe</a></li>
+                <li class="hover-bold"><a th:href="'/myprofile/' + ${username}" class="hover-bold" th:text="${username}"></a></li>
+                <li class="hover-bold"><a href="/new_recipe" class="hover-bold">New Recipe</a></li>
             </ul>
             <form class="navbar-form navbar-left" action="/search" method="POST">
                 <div class="form-group">
@@ -42,40 +42,26 @@
     </div>
 </nav>
 <!-------END OF NAVBAR------->
-
 <div class="container-fluid">
-    <!-------SUCCESS MESSAGE -->
-    <div th:if="${success}" class="alert alert-success alert-dismissable">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <strong>You have successfully created a new recipe!</strong>
+    <!-------FEED------->
+    <div class="row" style="max-width: 1280px; margin-left: auto; margin-right: auto; display: table;">
+        <!--Iteration-->
+        <div class="col-md-6">
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="col-xs-12 col-sm-3">
+                        <a th:href="'/profile/' + ${searchedUser.username}">
+                            <img th:src="@{/images/profile/default_profile_picture.png}" width="100%" alt="Yummy" />
+                        </a></div>
+                    <div class="col-xs-12 col-sm-9">
+                        <h3><a th:href="'/profile/' + ${searchedUser.username}" th:text="${searchedUser.username}" style="margin-left: 15px; color: #FF6666; float: left;"></a></h3>
+                    </div>
+                    <div class="clearfix"></div>
+                </li>
+            </ul>
+        </div>
     </div>
-    <!-------FORM -->
-    <form action="#" th:action="@{/new_recipe}" th:object="${recipe}" method="post">
-        <fieldset>
-            <legend th:text="${legend}"></legend>
-            <div class="form-group">
-                <input th:field="*{name}" type="text" name="recipe_name" id="recipe_name" placeholder="Recipe Name" class="form-control" autofocus/>
-            </div>
-
-            <div class="form-group">
-                <textarea th:field="*{description}" name="recipe" id="recipe" placeholder="Your recipe, step by step" class="form-control" rows="8"></textarea>
-            </div>
-
-            <div class="form-group">
-                <select th:field="*{category}" class="form-control" name="category" id="category">
-                    <option value="Starter/Soup">Starter/Soup</option>
-                    <option value="Main course">Main course</option>
-                    <option value="Dessert">Dessert</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <button type="reset" class="btn btn-default">Cancel</button>
-                <button th:text="${button}" type="submit" class="btn btn-success">BUTTON</button>
-            </div>
-
-        </fieldset>
-    </form>
 </div>
-
 </body>
 </html>
+</DOCTYPE>
