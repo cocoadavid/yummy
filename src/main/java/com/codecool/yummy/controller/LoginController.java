@@ -21,7 +21,9 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by szilarddavid on 2017.07.11..
@@ -91,14 +93,17 @@ public class LoginController {
     @RequestMapping(value="/search/{searchTerm}", method = RequestMethod.GET)
     @ResponseBody
     public String search(@PathVariable String searchTerm) throws JSONException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
         List<User> searchedUsers = userService.findByUsernameContaining(searchTerm);
-        List<String> users = new ArrayList<String>();
+        Set<String> users = new HashSet<>();
         for (User searchedUser : searchedUsers) {
             users.add(searchedUser.getUsername());
         }
         JSONArray array = new JSONArray(users);
         JsonObject response = Json.createObjectBuilder()
                 .add("searchedUsers", array.toString())
+                .add("loggedInUser", user.getUsername())
                 .build();
         return response.toString();
     }

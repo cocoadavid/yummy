@@ -36,7 +36,7 @@ $(document).ready(function () {
     $("#searchButton").click(function (event) {
         event.preventDefault();
         var searchTerm = $('#searchTerm').val();
-        $(".row").remove();
+        $("#content").empty();
         $.ajax({
             url: "/search/" + searchTerm,
             method: 'GET',
@@ -46,18 +46,34 @@ $(document).ready(function () {
                 var searchedUserList = info['searchedUsers'];
                 var users = JSON.parse(searchedUserList);
                 for( var i = 0; i < users.length; i++) {
-                    $("#content").append(
-                        "<div class='col-md-6'>" +
-                        "<ul class='list-group'>" +
-                        "<li class='list-group-item'>" +
-                        "<div class='col-xs-12 col-sm-3'>" +
-                        "<a href='/profile/" + users[i] + "'>" +
-                        "<img src='/images/profile/default_profile_picture.png' width='100%' alt='Yummy' />" +
-                        "</a></div>" +
-                        "<div class='col-xs-12 col-sm-9'>" +
-                        "<a href='/profile/" + users[i] + "' style='margin-left: 15px; margin-top: 30px; color: #FF6666; float: left; font-size: x-large;'>" + users[i] + "</a>" +
-                        "</div><div class='clearfix'></div></li></ul></div>"
-                    );
+                    if (users[i] == info['loggedInUser']) {
+                        $("#content").append(
+                            "<div class='col-md-6'>" +
+                            "<ul class='list-group'>" +
+                            "<li class='list-group-item'>" +
+                            "<div class='col-xs-12 col-sm-3'>" +
+                            "<a href='/myprofile/" + users[i] + "'>" +
+                            "<img src='/images/profile/default_profile_picture.png' width='100%' alt='Yummy' />" +
+                            "</a></div>" +
+                            "<div class='col-xs-12 col-sm-9'>" +
+                            "<a href='/myprofile/" + users[i] + "' style='margin-left: 15px; margin-top: 30px; color: #FF6666; float: left; font-size: x-large;'>" + users[i] + "</a>" +
+                            "</div><div class='clearfix'></div></li></ul></div>"
+                        );
+                    }
+                    else {
+                        $("#content").append(
+                            "<div class='col-md-6'>" +
+                            "<ul class='list-group'>" +
+                            "<li class='list-group-item'>" +
+                            "<div class='col-xs-12 col-sm-3'>" +
+                            "<a href='/profile/" + users[i] + "'>" +
+                            "<img src='/images/profile/default_profile_picture.png' width='100%' alt='Yummy' />" +
+                            "</a></div>" +
+                            "<div class='col-xs-12 col-sm-9'>" +
+                            "<a href='/profile/" + users[i] + "' style='margin-left: 15px; margin-top: 30px; color: #FF6666; float: left; font-size: x-large;'>" + users[i] + "</a>" +
+                            "</div><div class='clearfix'></div></li></ul></div>"
+                        );
+                    }
                 }
             },
             error: function (err) {
