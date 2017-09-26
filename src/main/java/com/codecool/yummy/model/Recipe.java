@@ -36,7 +36,8 @@ public class Recipe {
     @ManyToMany
     private List<User> yummers = new ArrayList<>();
 
-    @ManyToOne(cascade = {CascadeType.ALL})
+//    @ManyToOne(cascade = {CascadeType.ALL})
+    @ManyToOne
     private User user;
 
     public Recipe(){}

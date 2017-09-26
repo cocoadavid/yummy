@@ -53,20 +53,21 @@
         </div>
     </div>
     <!-------RECIPES------->
-    <div class="row" style="max-width: 1280px; margin-left: auto; margin-right: auto; display: table;">
-        <div th:if="${recipes.empty}">
-            <h1>No Recipes Yet</h1>
-        </div>
+    <div class="row">
         <!--Iteration-->
-        <div class="col-md-6" th:each="recipe, iterStat : ${recipes}">
-            <div style="background-color: #FF6666; height: 500px; width: 400px; border-radius: 5px;
-margin-bottom: 40px; margin-left: auto; margin-right: auto; display: table;">
-                <h3 th:text="${recipe.name}" style="color: white; font-weight: bold; margin-left: 10px; margin-top: 5px;"></h3>
+        <div class="col-lg-4 col-md-6" th:each="recipe, iterStat : ${recipes}" >
+            <div style="width: 400px;">
+                <h4 th:text="${recipe.user.username}" style="margin-left: 15px; color: #FF6666;"></h4>
+            </div>
+            <div style="background-color: #FF6666; height: 500px; width: 400px; border-radius: 5px; margin-bottom: 40px; box-shadow: 5px 5px 20px #888888">
+                <h3 th:text="${recipe.name}" style="color: white; font-weight: bold; margin-left: 10px; margin-top: 5px; padding-top: 5px;"></h3>
                 <a th:href="'/recipe/' + ${recipe.id}">
-                    <img th:src="@{/images/food/kaja1.jpg}" width="100%" alt="Yummy" />
+                    <img th:src="'/image/' + ${recipe.id}" width="100%" alt="Yummy" />
                 </a>
                 <br/>
-                <h4 style="color: white;"><span class="glyphicon glyphicon-heart" style="color: white"></span> Yummy!  <span class="glyphicon glyphicon-comment" style="color: white"></span> Comment</h4>
+                <button class="btn yummy" style="color: white; font-size: 20px; background-color: #FF6666" th:id="${recipe.id}"> <img src="/images/logo/cropped_logo.png" height="30px"> Yummy!</button><span class="badge" th:id="'yummy' + ${recipe.id}" th:text="${recipe.yummy}"></span>
+                <!--<h4 style="color: white;"><span class="glyphicon glyphicon-heart" style="color: white"></span> Yummy!  <span class="glyphicon glyphicon-comment" style="color: white"></span> Comment</h4>-->
+                <br/>
             </div>
         </div>
     </div>

@@ -215,4 +215,15 @@ public class LoginController {
         return response.toString();
     }
 
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public String delete(@PathVariable(value = "id") String id) {
+        Long recipeId = Long.valueOf(id).longValue();
+        recipeService.deleteRecipeById(recipeId);
+        JsonObject response = Json.createObjectBuilder()
+                .add("id", id)
+                .build();
+        return response.toString();
+    }
+
 }
