@@ -61,14 +61,14 @@
             </div>
             <div style="background-color: #FF6666; height: 500px; width: 400px; border-radius: 5px; margin-bottom: 40px; box-shadow: 5px 5px 20px #888888">
                 <div style="float: left"><h3 th:text="${recipe.name}" style="color: white; font-weight: bold; margin-left: 10px; margin-top: 5px; padding-top: 5px;"></h3></div>
-                <div style="float: right"><button th:attr="data-id=${recipe.id}" class="btn btn-danger btn-sm">
-                    <span class="glyphicon glyphicon-trash"></span> Delete
+                <div style="float: right;"><button th:attr="data-id=${recipe.id}" class="btn btn-danger btn-sm" style="background-color: #FF6666; border: none; outline: none">
+                    <h5><span style="margin-right: 5px" class="glyphicon glyphicon-trash"></span> Delete</h5>
                 </button></div>
                 <a th:href="'/recipe/' + ${recipe.id}">
                     <img th:src="'/image/' + ${recipe.id}" width="100%" alt="Yummy" />
                 </a>
                 <br/>
-                <button class="btn yummy" style="color: white; font-size: 20px; background-color: #FF6666"> <img src="/images/logo/cropped_logo.png" height="30px"> Yummy!</button><span class="badge" th:id="'yummy' + ${recipe.id}" th:text="${recipe.yummy}"></span>
+                <button class="btn yummy" style="color: white; font-size: 20px; background-color: #FF6666; outline: none;" th:id="${recipe.id}"><img src="/images/logo/cropped_logo.png" height="30px"></button><h5 style="color: white; display: inline-block;"><span class="badge" style="background-color: white; color: #FF6666; margin-right: 3px;" th:id="'yummy' + ${recipe.id}" th:text="${recipe.yummy}"></span><th:text> Yummy </th:text></h5>
                 <!--<h4 style="color: white;"><span class="glyphicon glyphicon-heart" style="color: white"></span> Yummy!  <span class="glyphicon glyphicon-comment" style="color: white"></span> Comment</h4>-->
                 <br/>
             </div>
