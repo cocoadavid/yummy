@@ -9,10 +9,16 @@ $(document).ready(function () {
                 alert(err + ' ERROR')
             },
             success: function (data) {
-                alert("Now you are following " + username );
+                $("span#follower").load(" span#follower").css();
+                if ($(this).attr('data-following') === 'false') {
+                    $(this).attr('data-following', 'true');
+                    $(this).text('Unfollow');
+                } else if ($(this).attr('data-following') === 'true') {
+                    $(this).attr('data-following', 'false');
+                    $(this).text('Follow');
+                }
             }
         })
-
     });
     //--------------LIKE------------
     $('button.yummy').click(function (event) {
