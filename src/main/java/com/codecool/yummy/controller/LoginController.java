@@ -213,9 +213,24 @@ public class LoginController {
         User followedUser = userService.findUserByUsername(username);
         user.addFollowing(followedUser);
         followedUser.addFollower(user);
-        System.out.println(user.getFollowing());
         userService.updateUser(user);
         userService.updateUser(followedUser);
+        JsonObject response = Json.createObjectBuilder()
+                .add("username", username)
+                .build();
+        return response.toString();
+    }
+
+    @RequestMapping(value = "/unfollow/{username}", method = RequestMethod.POST)
+    @ResponseBody
+    public String unfollow(@PathVariable(value = "username") String username) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        User unfollowedUser = userService.findUserByUsername(username);
+        user.removeFollowing(unfollowedUser);
+        unfollowedUser.removeFollower(user);
+        userService.updateUser(user);
+        userService.updateUser(unfollowedUser);
         JsonObject response = Json.createObjectBuilder()
                 .add("username", username)
                 .build();

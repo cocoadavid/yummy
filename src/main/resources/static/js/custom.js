@@ -9,15 +9,16 @@ $(document).ready(function () {
                 alert(err + ' ERROR');
             },
             success: function (data) {
-                // console.log(data);
                 if ($("button#follow").attr("data-follow") === "follow") {
                     $("button#follow").attr("data-follow", "unfollow");
                     $("button#follow").text("Unfollow");
+                    $("button#follow").css("backgroundColor", "#FF6666");
                     $("h5#counter").load(" h5#counter");
                 }
                 else if ($("button#follow").attr("data-follow") === "unfollow") {
                     $("button#follow").attr("data-follow", "follow");
                     $("button#follow").text("Follow");
+                    $("button#follow").css("backgroundColor", "#2C3E50");
                 }
             }
         })
