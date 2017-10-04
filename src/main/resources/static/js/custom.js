@@ -6,16 +6,18 @@ $(document).ready(function () {
             url: '/follow/' + username,
             method: 'POST',
             error: function (err) {
-                alert(err + ' ERROR')
+                alert(err + ' ERROR');
             },
             success: function (data) {
-                $("span#follower").load(" span#follower").css();
-                if ($(this).attr('data-following') === 'false') {
-                    $(this).attr('data-following', 'true');
-                    $(this).text('Unfollow');
-                } else if ($(this).attr('data-following') === 'true') {
-                    $(this).attr('data-following', 'false');
-                    $(this).text('Follow');
+                // console.log(data);
+                if ($("button#follow").attr("data-follow") === "follow") {
+                    $("button#follow").attr("data-follow", "unfollow");
+                    $("button#follow").text("Unfollow");
+                    $("h5#counter").load(" h5#counter");
+                }
+                else if ($("button#follow").attr("data-follow") === "unfollow") {
+                    $("button#follow").attr("data-follow", "follow");
+                    $("button#follow").text("Follow");
                 }
             }
         })
