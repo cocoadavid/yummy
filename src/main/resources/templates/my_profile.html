@@ -6,6 +6,11 @@
     <title>Yummy Profile</title>
     <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var follower = [[${follower}]]; //Your Thymleaf variable
+        /*]]>*/
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
@@ -49,7 +54,7 @@
         </div>
         <div class="col-sm-8" style="margin-top: 8px; display: inline-block;">
             <h1 th:text="${username}" style="font-weight: bold;"></h1><button type="button" style="color: white;" class="btn btn-sm btn-primary">Edit Profile</button>
-            <h5><span class="badge" th:text="${numberOfRecipes}"></span><th:text style="margin-right: 4px"> recipes </th:text><span class="badge" th:text="${numberOfFollowers}"></span><th:text style="margin-right: 4px"> followers </th:text><span class="badge" th:text="${numberOfFollowing}"></span><th:text style="margin-right: 4px"> following </th:text></h5>
+            <h5 id="counter"><span class="badge" th:text="${numberOfRecipes}"></span><th:text style="margin-right: 4px"> recipes </th:text><span class="badge" th:text="${numberOfFollowers}"></span><th:text style="margin-right: 4px"> followers </th:text><span class="badge" th:text="${numberOfFollowing}"></span><th:text style="margin-right: 4px"> following </th:text></h5>
         </div>
     </div>
     <!-------RECIPES------->
@@ -90,6 +95,7 @@
                     var id = info['id'];
                     var target = "#" + id;
                     $(target).remove();
+                    $("h5#counter").load(" h5#counter");
                 }
 
             })
