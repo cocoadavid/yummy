@@ -7,7 +7,6 @@ import com.codecool.yummy.service.UserService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,7 +28,7 @@ import java.util.Set;
  */
 
 @Controller
-public class LoginController {
+public class YummyController {
 
     @Autowired
     private UserService userService;
@@ -128,16 +126,24 @@ public class LoginController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         User otherUser = userService.findUserByUsername(username);
+        boolean userFollowsOtherUser;
+        System.out.println(otherUser.getFollowers().contains(user));
+        if (otherUser.getFollowers().contains(user)) {
+            userFollowsOtherUser = true;
+        } else {
+            userFollowsOtherUser = false;
+        }
+        System.out.println(userFollowsOtherUser);
         modelAndView.addObject("username", user.getUsername());
         modelAndView.addObject("otherUsername", otherUser.getUsername());
         modelAndView.addObject("recipes", otherUser.getRecipes());
+        modelAndView.addObject("follower", userFollowsOtherUser);
         modelAndView.addObject("numberOfRecipes", otherUser.getNumberOfRecipes(otherUser.getRecipes()));
         modelAndView.addObject("numberOfFollowers", otherUser.getNumberOfFollowers(otherUser.getFollowers()));
         modelAndView.addObject("numberOfFollowing", otherUser.getNumberOfFollowing(otherUser.getFollowing()));
         modelAndView.setViewName("user_profile");
         return modelAndView;
     }
-
 
     @RequestMapping(value = "/new_recipe", method = RequestMethod.GET)
     public ModelAndView newRecipe() {
@@ -164,7 +170,6 @@ public class LoginController {
             recipe.setUser(user);
             Recipe returnedRecipe = recipeService.saveRecipe(recipe);
             Long recipeId = returnedRecipe.getId();
-            System.out.println(recipeId);
             user.addRecipe(recipe);
             userService.updateUser(user);
             modelAndView.addObject("success", 1);
@@ -212,8 +217,25 @@ public class LoginController {
         User user = userService.findUserByEmail(auth.getName());
         User followedUser = userService.findUserByUsername(username);
         user.addFollowing(followedUser);
-        System.out.println(user.getFollowing());
+        followedUser.addFollower(user);
         userService.updateUser(user);
+        userService.updateUser(followedUser);
+        JsonObject response = Json.createObjectBuilder()
+                .add("username", username)
+                .build();
+        return response.toString();
+    }
+
+    @RequestMapping(value = "/unfollow/{username}", method = RequestMethod.POST)
+    @ResponseBody
+    public String unfollow(@PathVariable(value = "username") String username) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        User unfollowedUser = userService.findUserByUsername(username);
+        user.removeFollowing(unfollowedUser);
+        unfollowedUser.removeFollower(user);
+        userService.updateUser(user);
+        userService.updateUser(unfollowedUser);
         JsonObject response = Json.createObjectBuilder()
                 .add("username", username)
                 .build();

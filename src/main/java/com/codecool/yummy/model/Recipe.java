@@ -141,7 +141,5 @@ public class Recipe {
             yummers.add(user);
             yummy++;
         }
-
-
     }
 }

@@ -6,13 +6,16 @@
 <title>Yummy</title>
 	<link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
+<script th:inline="javascript">
+	/*<![CDATA[*/
+	var follower = [[${follower}]]; //Your Thymleaf variable
+	/*]]>*/
+</script>
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-
-
 
 	<!-------NAVBAR------->
 	<nav class="navbar navbar-default">
@@ -64,7 +67,7 @@
 						<img th:src="'/image/' + ${recipe.id}" width="100%" alt="Yummy" />
 					</a>
 					<br/>
-					<button class="btn yummy" style="color: white; font-size: 20px; background-color: #FF6666" th:id="${recipe.id}"> <img src="/images/logo/cropped_logo.png" height="30px"> Yummy!</button><span class="badge" th:id="'yummy' + ${recipe.id}" th:text="${recipe.yummy}"></span>
+					<button class="btn yummy" style="color: white; font-size: 20px; background-color: #FF6666; outline: none;" th:id="${recipe.id}"><img src="/images/logo/cropped_logo.png" height="30px"></button><h5 style="color: white; display: inline-block;"><span class="badge" style="background-color: white; color: #FF6666; margin-right: 3px;" th:id="'yummy' + ${recipe.id}" th:text="${recipe.yummy}"></span><th:text> Yummy </th:text></h5>
 					<!--<h4 style="color: white;"><span class="glyphicon glyphicon-heart" style="color: white"></span> Yummy!  <span class="glyphicon glyphicon-comment" style="color: white"></span> Comment</h4>-->
 					<br/>
 				</div>
