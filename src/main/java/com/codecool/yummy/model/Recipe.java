@@ -18,7 +18,6 @@ public class Recipe {
 
     private String name;
 
-    @Column(columnDefinition="TEXT")
     private String description;
 
     private String category;
@@ -36,8 +35,7 @@ public class Recipe {
     @ManyToMany
     private List<User> yummers = new ArrayList<>();
 
-//    @ManyToOne(cascade = {CascadeType.ALL})
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.ALL})
     private User user;
 
     public Recipe(){}
@@ -141,5 +139,7 @@ public class Recipe {
             yummers.add(user);
             yummy++;
         }
+
+
     }
 }
