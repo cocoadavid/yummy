@@ -6,6 +6,11 @@
     <title>Yummy Profile</title>
     <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var follower = [[${follower}]]; //Your Thymleaf variable
+        /*]]>*/
+    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
@@ -25,14 +30,14 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li <li class="hover-bold"><a th:href="'/profile/' + ${username}" class="hover-bold" th:text="${username}"></a></li>
+                <li <li class="hover-bold"><a th:href="'/myprofile/' + ${username}" class="hover-bold" th:text="${username}"></a></li>
                 <li class="hover-bold"><a href="/new_recipe" class="hover-bold">New Recipe</a></li>
             </ul>
-            <form class="navbar-form navbar-left" action="/search" method="POST">
+            <form class="navbar-form navbar-left">
                 <div class="form-group">
-                    <input type="text" name="searchTerm" class="form-control" placeholder="Search Users">
+                    <input type="text" name="searchTerm" id="searchTerm" class="form-control" placeholder="Search Users">
                 </div>
-                <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+                <button type="submit" class="btn btn-primary" id="searchButton"><span class="glyphicon glyphicon-search"></span></button>
             </form>
             <ul class="nav navbar-nav navbar-right">
                 <li class="hover-bold"><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
@@ -41,7 +46,7 @@
     </div>
 </nav>
 <!-------END OF NAVBAR------->
-<div class="container-fluid">
+<div class="container-fluid" id="content">
     <!-------PROFILE DETAILS------->
     <div class="row justify-content-center" style="max-width: 1280px; margin-left: auto; margin-right: auto; display: table;">
         <div class="col-sm-4" style="display: inline-block">
@@ -49,27 +54,54 @@
         </div>
         <div class="col-sm-8" style="margin-top: 8px; display: inline-block;">
             <h1 th:text="${username}" style="font-weight: bold;"></h1><button type="button" style="color: white;" class="btn btn-sm btn-primary">Edit Profile</button>
-            <h5><span class="badge" th:text="${numberOfRecipes}"></span><th:text style="margin-right: 4px"> recipes </th:text><span class="badge" th:text="${numberOfFollowers}"></span><th:text style="margin-right: 4px"> followers </th:text><span class="badge" th:text="${numberOfFollowing}"></span><th:text style="margin-right: 4px"> following </th:text></h5>
+            <h5 id="counter"><span class="badge" th:text="${numberOfRecipes}"></span><th:text style="margin-right: 4px"> recipes </th:text><span class="badge" th:text="${numberOfFollowers}"></span><th:text style="margin-right: 4px"> followers </th:text><span class="badge" th:text="${numberOfFollowing}"></span><th:text style="margin-right: 4px"> following </th:text></h5>
         </div>
     </div>
     <!-------RECIPES------->
-    <div class="row" style="max-width: 1280px; margin-left: auto; margin-right: auto; display: table;">
-        <div th:if="${recipes.empty}">
-            <h1>No Recipes Yet</h1>
-        </div>
+    <div class="row">
         <!--Iteration-->
-        <div class="col-md-6" th:each="recipe, iterStat : ${recipes}">
-            <div style="background-color: #FF6666; height: 500px; width: 400px; border-radius: 5px;
-margin-bottom: 40px; margin-left: auto; margin-right: auto; display: table;">
-                <h3 th:text="${recipe.name}" style="color: white; font-weight: bold; margin-left: 10px; margin-top: 5px;"></h3>
+        <div class="col-lg-4 col-md-6" th:each="recipe, iterStat : ${recipes}" th:id="${recipe.id}">
+            <div style="width: 400px;">
+                <!--<h4 th:text="${recipe.user.username}" style="margin-left: 15px; color: #FF6666;"></h4>-->
+            </div>
+            <div style="background-color: #FF6666; height: 500px; width: 400px; border-radius: 5px; margin-bottom: 40px; box-shadow: 5px 5px 20px #888888">
+                <div style="float: left"><h3 th:text="${recipe.name}" style="color: white; font-weight: bold; margin-left: 10px; margin-top: 5px; padding-top: 5px;"></h3></div>
+                <div style="float: right;"><button th:attr="data-id=${recipe.id}" class="btn btn-danger btn-sm" style="background-color: #FF6666; border: none; outline: none">
+                    <h5><span style="margin-right: 5px" class="glyphicon glyphicon-trash"></span> Delete</h5>
+                </button></div>
                 <a th:href="'/recipe/' + ${recipe.id}">
-                    <img th:src="@{/images/food/kaja1.jpg}" width="100%" alt="Yummy" />
+                    <img th:src="'/image/' + ${recipe.id}" width="100%" alt="Yummy" />
                 </a>
                 <br/>
-                <h4 style="color: white;"><span class="glyphicon glyphicon-heart" style="color: white"></span> Yummy!  <span class="glyphicon glyphicon-comment" style="color: white"></span> Comment</h4>
+                <button class="btn yummy" style="color: white; font-size: 20px; background-color: #FF6666; outline: none;" th:id="${recipe.id}"><img src="/images/logo/cropped_logo.png" height="30px"></button><h5 style="color: white; display: inline-block;"><span class="badge" style="background-color: white; color: #FF6666; margin-right: 3px;" th:id="'yummy' + ${recipe.id}" th:text="${recipe.yummy}"></span><th:text> Yummy </th:text></h5>
+                <!--<h4 style="color: white;"><span class="glyphicon glyphicon-heart" style="color: white"></span> Yummy!  <span class="glyphicon glyphicon-comment" style="color: white"></span> Comment</h4>-->
+                <br/>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('button.btn-danger').click(function (event) {
+            var recipeId = $(event.currentTarget).data("id");
+            $.ajax({
+                url:"/delete/" + recipeId,
+                method: 'DELETE',
+                error: function (err) {
+                    alert("errorka")
+                },
+                success: function (data) {
+                    var info = JSON.parse(data);
+                    var id = info['id'];
+                    var target = "#" + id;
+                    $(target).remove();
+                    $("h5#counter").load(" h5#counter");
+                }
+
+            })
+        })
+    })
+</script>
+<script src="/js/custom.js"></script>
 </body>
 </html>

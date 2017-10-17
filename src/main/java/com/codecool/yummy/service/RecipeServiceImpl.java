@@ -1,7 +1,9 @@
 package com.codecool.yummy.service;
 
 import com.codecool.yummy.model.Recipe;
+import com.codecool.yummy.model.User;
 import com.codecool.yummy.repository.RecipeRepository;
+import com.codecool.yummy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,10 @@ public class RecipeServiceImpl implements RecipeService {
     @Qualifier("recipeRepository")
     @Autowired
     private RecipeRepository recipeRepository;
+
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public Recipe findRecipeByName(String name) {
@@ -38,5 +44,14 @@ public class RecipeServiceImpl implements RecipeService {
     public Recipe updateRecipe(Recipe recipe) {
         Recipe r = recipeRepository.save(recipe);
         return r;
+    }
+
+    @Override
+    public void deleteRecipeById(Long id) {
+        Recipe recipe = findRecipeById(id);
+        User user = recipe.getUser();
+        user.removeRecipe(recipe);
+        userService.updateUser(user);
+        recipeRepository.delete(recipe);
     }
 }

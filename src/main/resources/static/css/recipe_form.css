@@ -19,3 +19,37 @@
 legend {
     color: #FF6666;
 }
+
+/*for presentation*/
+/*for presentation*/
+input::-webkit-input-placeholder {
+    color: darkslateblue !important;
+}
+
+input:-moz-placeholder { /* Firefox 18- */
+    color: darkslateblue !important;
+}
+
+input::-moz-placeholder {  /* Firefox 19+ */
+    color: darkslateblue !important;
+}
+
+input:-ms-input-placeholder {
+    color: darkslateblue !important;
+}
+
+textarea::-webkit-input-placeholder {
+    color: darkslateblue !important;
+}
+
+textarea:-moz-placeholder { /* Firefox 18- */
+    color: darkslateblue !important;
+}
+
+textarea::-moz-placeholder {  /* Firefox 19+ */
+    color: darkslateblue !important;
+}
+
+textarea:-ms-input-placeholder {
+    color: darkslateblue !important;
+}
