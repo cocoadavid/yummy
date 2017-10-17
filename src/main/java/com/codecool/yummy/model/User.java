@@ -164,11 +164,7 @@ public class User {
 
     public void removeRecipe(Recipe recipe) { recipes.remove(recipe); }
 
-    public void addFollower(User user) {
-        if (this.followers.contains(user) == false) {
-            followers.add(user);
-        }
-    }
+    public void addFollower(User user) { followers.add(user); }
 
     public void removeFollower(User user) { followers.remove(user); }
 
